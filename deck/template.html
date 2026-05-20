@@ -265,7 +265,7 @@
   .s-achieve .achieve-col {
     display: grid;
     grid-template-columns: 48px 1fr;
-    align-items: center;
+    align-items: start;
     gap: clamp(10px, 1.2vw, 20px);
     padding-right: clamp(24px, 2.8vw, 52px);
     border-right: 1px solid rgba(31, 43, 224, 0.22);
@@ -285,7 +285,7 @@
   .s-achieve .col-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: clamp(14px, 1.6vh, 24px);
   }
   .s-achieve .col-content h3 {
@@ -327,9 +327,9 @@
     padding-top: 0.18em;
   }
 
-  /* Larger bullets scoped to Key Achievements section only */
+  /* Bullets scoped to Key Achievements section only */
   .s-achieve .cards .bullet-list li {
-    font-size: clamp(15px, 1.25vw, 19px);
+    font-size: clamp(14px, 1.1vw, 17px);
   }
 
   /* ─── PERSONAL ACHIEVEMENTS SECTION ──────────────────────── */
@@ -371,7 +371,7 @@
   }
   .s-achieve .personal-text {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(13px, 0.95vw, 15px);
+    font-size: clamp(15px, 1.1vw, 17px);
     line-height: 1.55;
     color: var(--ink);
   }
