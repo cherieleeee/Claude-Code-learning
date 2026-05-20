@@ -385,6 +385,80 @@
     opacity: 0.35;
     margin: 0 clamp(8px, 0.8vw, 14px);
   }
+
+  /* ─── SLIDE 3: PROFESSIONAL EXPERIENCE ───────────────────── */
+  .s-exp { background: var(--paper); }
+
+  .s-exp .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2.2vh, 36px);
+    z-index: 5;
+  }
+  .s-exp .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+  }
+  .s-exp .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(40px, min(4.4vw, 7.5vh), 88px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-exp .exp-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .s-exp .exp-col {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.2vh, 16px);
+    padding-right: clamp(24px, 2.8vw, 52px);
+    border-right: 1px solid rgba(31, 43, 224, 0.22);
+  }
+  .s-exp .exp-col:not(:first-child) {
+    padding-left: clamp(24px, 2.8vw, 52px);
+  }
+  .s-exp .exp-col:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+  .s-exp .exp-year {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.82vw, 13px);
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+  .s-exp .exp-role {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 1.6vw, 30px);
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .s-exp .exp-company {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(11px, 0.82vw, 13px);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    opacity: 0.65;
+  }
+  .s-exp .exp-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(31, 43, 224, 0.22);
+    flex-shrink: 0;
+  }
 </style>
 </head>
 <body>
@@ -446,7 +520,7 @@
         </div>
       </div>
 
-      <div class="pagenum">01 / 02</div>
+      <div class="pagenum">01 / 03</div>
     </section>
 
     <!-- ═══════════════════════════════════════════════════════
@@ -517,7 +591,73 @@
 
       </div>
 
-      <div class="pagenum">02 / 02</div>
+      <div class="pagenum">02 / 03</div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SLIDE 3 — PROFESSIONAL EXPERIENCES
+         ═══════════════════════════════════════════════════════ -->
+    <section class="slide s-exp hairlines">
+      <div class="frame">
+
+        <div class="topbar">
+          <div class="h">Professional Experiences</div>
+        </div>
+
+        <div class="exp-cols">
+
+          <!-- Col 1: Global SCM Specialist -->
+          <div class="exp-col">
+            <div class="exp-year">2018 – 2020</div>
+            <div class="exp-role">Global Supply Chain Specialist</div>
+            <div class="exp-company">Festo SE &amp; Co. KG · Esslingen, Germany</div>
+            <div class="exp-divider"></div>
+            <ul class="bullet-list">
+              <li>Managed international material planning and logistics while redesigning return shipment processes to improve delivery reliability, efficiency and data transparency</li>
+            </ul>
+          </div>
+
+          <!-- Col 2: Process Expert → Head of MM -->
+          <div class="exp-col">
+            <div class="exp-year">2020 – 2023</div>
+            <div class="exp-role">Process Expert → Head of Material Management</div>
+            <div class="exp-company">Festo Pte. Ltd. · Singapore</div>
+            <div class="exp-divider"></div>
+            <ul class="bullet-list">
+              <li>Led supply network planning across ASEAN &amp; Pacific, improving delivery performance and inventory levels by 20%</li>
+              <li>Led 4-member team in Material Management and Supply Network Planning across ASEAN and Pacific operations</li>
+            </ul>
+          </div>
+
+          <!-- Col 3: SAP Consultant -->
+          <div class="exp-col">
+            <div class="exp-year">2023 – 2025</div>
+            <div class="exp-role">SAP Consultant</div>
+            <div class="exp-company">Continental Automotive Pte. Ltd. · Singapore</div>
+            <div class="exp-divider"></div>
+            <ul class="bullet-list">
+              <li>Led end-to-end SAP S/4HANA implementation across Purchase-to-Pay lifecycle, driving global process transformation</li>
+              <li>Managed configuration, data migration, system optimization, and successful go-lives for complex manufacturing plants globally</li>
+            </ul>
+          </div>
+
+          <!-- Col 4: IT Project Manager (current) -->
+          <div class="exp-col">
+            <div class="exp-year">2025 – present</div>
+            <div class="exp-role">IT Project Manager</div>
+            <div class="exp-company">Robert Bosch (SEA) Pte. Ltd. · Singapore</div>
+            <div class="exp-divider"></div>
+            <ul class="bullet-list">
+              <li>Lead SAP BTP initiatives for global digital ordering, building middleware integrating customer frontend with SAP ERP via APIs</li>
+              <li>Directed pilot go-live of commercial return solution on SAP BTP, enabling automated return submissions across East Asia</li>
+              <li>Managed data-driven reporting with backend integration and front-end dashboard visualization</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pagenum">03 / 03</div>
     </section>
 
   </div>
