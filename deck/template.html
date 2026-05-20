@@ -370,6 +370,14 @@
     line-height: 1.55;
     color: var(--ink);
   }
+  .s-achieve .skills-section {
+    margin-top: clamp(12px, 1.8vh, 30px);
+  }
+  .s-achieve .skills-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+  }
 </style>
 </head>
 <body>
@@ -493,20 +501,28 @@
         </div>
 
         <!-- Skills acquired -->
-        <div class="personal-section">
+        <div class="personal-section skills-section">
           <div class="p-topbar">Skills acquired</div>
-          <div class="personal-cards">
+          <div class="skills-cards">
             <div class="personal-item">
               <div class="col-num">01.</div>
-              <div class="personal-text">[Skill placeholder]</div>
+              <div class="personal-text">BTP Design &amp; Build</div>
             </div>
             <div class="personal-item">
               <div class="col-num">02.</div>
-              <div class="personal-text">[Skill placeholder]</div>
+              <div class="personal-text">BTP Project Management</div>
             </div>
             <div class="personal-item">
               <div class="col-num">03.</div>
-              <div class="personal-text">[Skill placeholder]</div>
+              <div class="personal-text">Power BI Automation</div>
+            </div>
+            <div class="personal-item">
+              <div class="col-num">04.</div>
+              <div class="personal-text">Python</div>
+            </div>
+            <div class="personal-item">
+              <div class="col-num">05.</div>
+              <div class="personal-text">SQL Query and Data Handling</div>
             </div>
           </div>
         </div>
