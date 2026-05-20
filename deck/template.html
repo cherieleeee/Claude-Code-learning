@@ -256,53 +256,73 @@
     flex-shrink: 0;
   }
 
-  /* Two wide cards side-by-side */
+  /* Two achievement columns side-by-side */
   .s-achieve .cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(28px, 3vw, 56px);
+    gap: 0;
   }
-  .s-achieve .card-item {
+  .s-achieve .achieve-col {
     display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: clamp(12px, 1.4vw, 22px);
-    border-right: 1px solid rgba(31, 43, 224, 0.18);
-    padding-right: clamp(28px, 3vw, 56px);
+    grid-template-columns: 48px 1fr;
+    gap: clamp(10px, 1.2vw, 20px);
+    padding-right: clamp(24px, 2.8vw, 52px);
+    border-right: 1px solid rgba(31, 43, 224, 0.22);
   }
-  .s-achieve .card-item:last-child {
+  .s-achieve .achieve-col:last-child {
     border-right: none;
     padding-right: 0;
+    padding-left: clamp(24px, 2.8vw, 52px);
   }
-  .s-achieve .card-item .num-tag {
+  .s-achieve .col-num {
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(13px, 0.9vw, 15px);
+    font-size: clamp(12px, 0.88vw, 14px);
     color: var(--ink);
     letter-spacing: 0.04em;
-    padding-top: 6px;
+    padding-top: 5px;
   }
-  .s-achieve .card-item h3 {
-    margin: 0 0 clamp(10px, 1.2vh, 18px) 0;
+  .s-achieve .col-content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(14px, 1.6vh, 24px);
+  }
+  .s-achieve .col-content h3 {
+    margin: 0;
     font-family: 'Newsreader', Georgia, serif;
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(28px, 2.2vw, 44px);
-    line-height: 1.05;
+    font-size: clamp(22px, 1.9vw, 38px);
+    line-height: 1.08;
     color: var(--ink);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.22);
+    padding-bottom: clamp(12px, 1.4vh, 20px);
   }
-  .s-achieve .card-item p {
+
+  /* Bullet list — DM Mono dash marker, Hanken Grotesk body */
+  .bullet-list {
+    list-style: none;
     margin: 0;
-    font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(14px, 1vw, 16px);
-    line-height: 1.6;
-    color: var(--ink);
-  }
-  /* Horizontal rule below the heading inside each card */
-  .s-achieve .card-item .card-body {
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0;
-    border-top: 1px solid rgba(31, 43, 224, 0.22);
-    padding-top: clamp(14px, 1.6vh, 22px);
+    gap: clamp(10px, 1.2vh, 18px);
+  }
+  .bullet-list li {
+    display: grid;
+    grid-template-columns: 1.4em 1fr;
+    gap: 0.3em;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .bullet-list li::before {
+    content: '—';
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.8vw, 13px);
+    color: var(--ink);
+    opacity: 0.55;
+    padding-top: 0.18em;
   }
 </style>
 </head>
@@ -371,79 +391,50 @@
         </div>
       </div>
 
-      <div class="pagenum">01 / 03</div>
+      <div class="pagenum">01 / 02</div>
     </section>
 
     <!-- ═══════════════════════════════════════════════════════
-         SLIDE 2 — ACHIEVEMENT 01
-         First Commercial Return Tool Rollout in EA
+         SLIDE 2 — KEY ACHIEVEMENTS (combined)
          ═══════════════════════════════════════════════════════ -->
     <section class="slide s-achieve hairlines">
       <div class="frame">
 
         <div class="topbar">
-          <div class="h">First Commercial Return Tool Rollout in EA</div>
-          <div class="lab-tag">Achievement 01 · EA Region</div>
+          <div class="h">Key Achievements · FY 2024–2025</div>
+          <div class="lab-tag">EA · AP · LA · NA</div>
         </div>
 
         <div class="cards">
 
-          <div class="card-item">
-            <div class="num-tag">01.</div>
-            <div class="card-body">
-              <h3>Design to Go-Live<br/>in Six Months</h3>
-              <p>Delivered end-to-end — from initial design and build through to full business go-live — within a six-month window. Achieved with a highly efficient, lean team, demonstrating what focused execution and ownership look like in practice.</p>
+          <!-- Achievement 01 -->
+          <div class="achieve-col">
+            <div class="col-num">01.</div>
+            <div class="col-content">
+              <h3>First Commercial Return Tool Rollout in EA</h3>
+              <ul class="bullet-list">
+                <li>Design to business go-live delivered in 6 months with a highly efficient small team</li>
+                <li>Successful CMP integration enabling a one-stop self-service portal for customers</li>
+              </ul>
             </div>
           </div>
 
-          <div class="card-item">
-            <div class="num-tag">02.</div>
-            <div class="card-body">
-              <h3>One-Stop Self-Service<br/>via CMP Integration</h3>
-              <p>Successfully integrated the return tool with CMP, transforming it into a unified self-service portal. Customers can now handle the full return journey in one place — removing friction, reducing manual touchpoints, and setting a new standard for the region.</p>
+          <!-- Achievement 02 -->
+          <div class="achieve-col">
+            <div class="col-num">02.</div>
+            <div class="col-content">
+              <h3>DXF × Order Rollout — AP, LA &amp; NA</h3>
+              <ul class="bullet-list">
+                <li>First successful digital solutions in Indonesia &amp; Philippines — mindset shift toward automation in the most challenging markets</li>
+                <li>Expanded BTP connections with PS0 and P39, marking a major step toward fully automated MA order entry</li>
+              </ul>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div class="pagenum">02 / 03</div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════
-         SLIDE 3 — ACHIEVEMENT 02
-         DXF × Order Rollout in AP, LA and NA
-         ═══════════════════════════════════════════════════════ -->
-    <section class="slide s-achieve hairlines">
-      <div class="frame">
-
-        <div class="topbar">
-          <div class="h">DXF × Order Rollout — AP, LA &amp; NA</div>
-          <div class="lab-tag">Achievement 02 · AP · LA · NA</div>
-        </div>
-
-        <div class="cards">
-
-          <div class="card-item">
-            <div class="num-tag">01.</div>
-            <div class="card-body">
-              <h3>First Digital Solutions in<br/>Indonesia &amp; Philippines</h3>
-              <p>Drove successful mindset shifts in two of the most challenging markets in the region. Indonesia and Philippines now run on digital order solutions — the first time automation has taken hold in these markets, marking a genuine change in how business gets done on the ground.</p>
-            </div>
-          </div>
-
-          <div class="card-item">
-            <div class="num-tag">02.</div>
-            <div class="card-body">
-              <h3>Expanded BTP Connectivity<br/>Toward Full Automation</h3>
-              <p>Extended BTP connections to include PS0 and P39, a major step toward fully automated MA order entry across the region. This lays the technical foundation for a future where manual order processing across AP, LA, and NA becomes the exception, not the rule.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="pagenum">03 / 03</div>
+      <div class="pagenum">02 / 02</div>
     </section>
 
   </div>
