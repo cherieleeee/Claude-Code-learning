@@ -346,9 +346,29 @@
   }
   .s-achieve .personal-cards {
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .s-achieve .personal-item {
+    display: grid;
     grid-template-columns: 48px 1fr;
     gap: clamp(10px, 1.2vw, 20px);
     align-items: start;
+    padding-right: clamp(24px, 2.8vw, 52px);
+    border-right: 1px solid rgba(31, 43, 224, 0.22);
+  }
+  .s-achieve .personal-item:not(:first-child) {
+    padding-left: clamp(24px, 2.8vw, 52px);
+  }
+  .s-achieve .personal-item:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+  .s-achieve .personal-text {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.55;
+    color: var(--ink);
   }
 </style>
 </head>
@@ -457,12 +477,17 @@
         <div class="personal-section">
           <div class="p-topbar">Personal achievements</div>
           <div class="personal-cards">
-            <div class="col-num">01.</div>
-            <div class="col-content">
-              <h3>Self-learning skills fully strengthened, with confidence to take on new challenges. Expanded my capabilities by exploring new topics beyond what I once thought possible.</h3>
-              <ul class="bullet-list">
-                <li>Started with a business and operation background, built up solid technical skills along the way</li>
-              </ul>
+            <div class="personal-item">
+              <div class="col-num">01.</div>
+              <div class="personal-text">Self-learning skills fully strengthened, with confidence to take on new challenges.</div>
+            </div>
+            <div class="personal-item">
+              <div class="col-num">02.</div>
+              <div class="personal-text">Expanded my capabilities by exploring new topics beyond what I once thought possible.</div>
+            </div>
+            <div class="personal-item">
+              <div class="col-num">03.</div>
+              <div class="personal-text">Started with a business and operation background, built up solid technical skills along the way.</div>
             </div>
           </div>
         </div>
