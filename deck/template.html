@@ -230,8 +230,8 @@
     inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    gap: clamp(20px, 2.2vh, 36px);
+    grid-template-rows: auto 1fr auto;
+    gap: clamp(14px, 1.6vh, 26px);
     z-index: 5;
   }
   .s-achieve .topbar {
@@ -325,6 +325,30 @@
     color: var(--ink);
     opacity: 0.55;
     padding-top: 0.18em;
+  }
+
+  /* ─── PERSONAL ACHIEVEMENTS SECTION ──────────────────────── */
+  .s-achieve .personal-section {
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(12px, 1.4vh, 22px);
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: clamp(10px, 1.2vh, 18px);
+  }
+  .s-achieve .personal-section .p-topbar {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(26px, min(2.8vw, 4.6vh), 52px);
+    line-height: 0.95;
+    color: var(--ink);
+    padding-bottom: clamp(10px, 1.2vh, 16px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.22);
+  }
+  .s-achieve .personal-cards {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: clamp(10px, 1.2vw, 20px);
+    align-items: start;
   }
 </style>
 </head>
@@ -428,6 +452,21 @@
           </div>
 
         </div>
+
+        <!-- Personal achievements -->
+        <div class="personal-section">
+          <div class="p-topbar">Personal achievements</div>
+          <div class="personal-cards">
+            <div class="col-num">01.</div>
+            <div class="col-content">
+              <h3>Self-learning skills fully strengthened, with confidence to take on new challenges. Expanded my capabilities by exploring new topics beyond what I once thought possible.</h3>
+              <ul class="bullet-list">
+                <li>Started with a business and operation background, built up solid technical skills along the way</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="pagenum">02 / 02</div>
