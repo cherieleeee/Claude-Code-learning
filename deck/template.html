@@ -371,12 +371,19 @@
     color: var(--ink);
   }
   .s-achieve .skills-section {
-    margin-top: clamp(12px, 1.8vh, 30px);
+    margin-top: clamp(24px, 3.6vh, 56px);
   }
-  .s-achieve .skills-cards {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0;
+  .s-achieve .skills-line {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .s-achieve .skills-line .sep {
+    opacity: 0.35;
+    margin: 0 clamp(8px, 0.8vw, 14px);
   }
 </style>
 </head>
@@ -503,27 +510,8 @@
         <!-- Skills acquired -->
         <div class="personal-section skills-section">
           <div class="p-topbar">Skills acquired</div>
-          <div class="skills-cards">
-            <div class="personal-item">
-              <div class="col-num">01.</div>
-              <div class="personal-text">BTP Design &amp; Build</div>
-            </div>
-            <div class="personal-item">
-              <div class="col-num">02.</div>
-              <div class="personal-text">BTP Project Management</div>
-            </div>
-            <div class="personal-item">
-              <div class="col-num">03.</div>
-              <div class="personal-text">Power BI Automation</div>
-            </div>
-            <div class="personal-item">
-              <div class="col-num">04.</div>
-              <div class="personal-text">Python</div>
-            </div>
-            <div class="personal-item">
-              <div class="col-num">05.</div>
-              <div class="personal-text">SQL Query and Data Handling</div>
-            </div>
+          <div class="skills-line">
+            BTP Design &amp; Build<span class="sep">|</span>BTP Project Management<span class="sep">|</span>Power BI Automation<span class="sep">|</span>Python<span class="sep">|</span>SQL Query and Data Handling
           </div>
         </div>
 
