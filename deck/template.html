@@ -230,9 +230,15 @@
     inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto auto;
-    gap: clamp(14px, 1.6vh, 26px);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0;
     z-index: 5;
+  }
+  .s-achieve .key-section {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(12px, 1.4vh, 20px);
+    padding-bottom: clamp(12px, 1.4vh, 20px);
   }
   .s-achieve .topbar {
     display: flex; align-items: end; justify-content: space-between;
@@ -376,7 +382,7 @@
     color: var(--ink);
   }
   .s-achieve .skills-section {
-    margin-top: clamp(24px, 3.6vh, 56px);
+    margin-top: 0;
   }
   .s-achieve .skills-line {
     font-family: 'Hanken Grotesk', sans-serif;
@@ -535,6 +541,8 @@
     <section class="slide s-achieve hairlines">
       <div class="frame">
 
+        <!-- Section 1: Key Achievements -->
+        <div class="key-section">
         <div class="topbar">
           <div class="h">Key Achievements</div>
           <div class="lab-tag">Apr 2025 to present</div>
@@ -568,8 +576,9 @@
           </div>
 
         </div>
+        </div><!-- end .key-section -->
 
-        <!-- Personal achievements -->
+        <!-- Personal Development -->
         <div class="personal-section">
           <div class="p-topbar">Personal Development</div>
           <div class="personal-cards">
