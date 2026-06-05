@@ -134,28 +134,16 @@
   .nav-btns button:hover { opacity: 1; }
   .nav-btns button:disabled { opacity: 0.18; cursor: default; }
 
-  /* Edit button — bottom right */
-  .edit-ctrl {
-    position: fixed;
-    right: clamp(28px, 2.4vw, 48px);
-    bottom: clamp(44px, 4.4vh, 70px);
-    z-index: 12;
+  .nav-btns .edit-sep {
+    width: 1px;
+    background: rgba(31, 43, 224, 0.25);
+    margin: 4px 4px;
   }
-  .edit-ctrl button {
-    font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(12px, 0.9vw, 15px);
-    color: var(--ink);
-    background: transparent;
-    border: 1.5px solid var(--ink);
+  .nav-btns button.btn-edit {
     padding: 6px 18px;
-    cursor: pointer;
     letter-spacing: 0.08em;
-    line-height: 1;
-    opacity: 0.55;
-    transition: opacity 160ms ease, background 160ms ease;
   }
-  .edit-ctrl button:hover { opacity: 1; }
-  .edit-ctrl button.active {
+  .nav-btns button.btn-edit.active {
     background: var(--ink);
     color: var(--paper);
     opacity: 1;
@@ -735,10 +723,8 @@
 <div class="nav-btns">
   <button id="btn-prev" onclick="show(current - 1)">←</button>
   <button id="btn-next" onclick="show(current + 1)">→</button>
-</div>
-
-<div class="edit-ctrl">
-  <button id="btn-edit" onclick="toggleEdit()">Edit</button>
+  <div class="edit-sep"></div>
+  <button id="btn-edit" class="btn-edit" onclick="toggleEdit()">Edit</button>
 </div>
 
 <script>
@@ -775,6 +761,7 @@
     const btn = document.getElementById('btn-edit');
     btn.textContent = editing ? 'Done' : 'Edit';
     btn.classList.toggle('active', editing);
+    btn.classList.toggle('btn-edit', true);
     document.querySelector('.deck').classList.toggle('editing', editing);
     EDITABLE.forEach(sel => {
       document.querySelectorAll(sel).forEach(el => {
