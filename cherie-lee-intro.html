@@ -318,15 +318,15 @@
   }
 
   /* ═══════════════════════════════════════════════
-     SLIDE 3 — EXPERIENCE
+     SLIDE 3 — EXPERIENCE (horizontal 4-col timeline)
   ═══════════════════════════════════════════════ */
   .s-experience { background: var(--paper); }
   .s-experience .frame {
     position: absolute;
     inset: clamp(70px, 7.5vh, 120px) clamp(36px, 3.6vw, 80px) clamp(90px, 9.5vh, 140px);
     display: grid;
-    grid-template-rows: auto 1fr;
-    gap: clamp(16px, 1.8vh, 28px);
+    grid-template-rows: auto auto 1fr;
+    gap: clamp(14px, 1.6vh, 24px);
     z-index: 5;
   }
   .s-experience .topbar {
@@ -347,64 +347,103 @@
     font-size: clamp(11px, 0.82vw, 13px);
     color: var(--ink); text-align: right;
   }
-  .s-experience .list {
+
+  /* Timeline rail */
+  .s-experience .timeline-rail {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    position: relative;
+  }
+  .s-experience .timeline-rail::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    height: 1.5px;
+    background: var(--ink);
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+  .s-experience .t-node {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    justify-content: stretch;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .s-experience .t-node .dot {
+    width: clamp(8px, 0.7vw, 12px);
+    height: clamp(8px, 0.7vw, 12px);
+    background: var(--ink);
+    border-radius: 0;
+    margin-bottom: 6px;
+  }
+  .s-experience .t-node .yr {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    text-align: center;
+    background: var(--paper);
+    padding: 2px 6px;
+  }
+
+  /* 5 columns but we show col 1-4 for the 4 main roles + col 5 for Bosch */
+  .s-experience .cols {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(12px, 1.4vw, 22px);
+    flex: 1 1 0;
     overflow: hidden;
   }
-  .s-experience .exp-row {
-    display: grid;
-    grid-template-columns: clamp(90px, 9vw, 140px) 1fr;
-    gap: clamp(16px, 1.8vw, 32px);
-    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
-    padding: clamp(8px, 1vh, 14px) 0;
-    flex: 1 1 0;
-    align-items: start;
+  .s-experience .exp-col {
+    border-left: 1.5px solid var(--ink);
+    padding-left: clamp(10px, 1vw, 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow: hidden;
   }
-  .s-experience .yr {
-    font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(11px, 0.82vw, 13px);
-    color: var(--ink);
-    letter-spacing: 0.04em;
-    padding-top: 4px;
-    line-height: 1.3;
-  }
-  .s-experience .detail .role {
+  .s-experience .exp-col .role {
     font-family: 'Newsreader', Georgia, serif;
     font-weight: 400;
-    font-size: clamp(18px, 1.5vw, 28px);
+    font-size: clamp(14px, 1.1vw, 20px);
     line-height: 1.1;
     color: var(--ink);
-    margin: 0 0 3px 0;
+    margin: 0;
   }
-  .s-experience .detail .company {
+  .s-experience .exp-col .company {
     font-family: 'Hanken Grotesk', sans-serif;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: clamp(10px, 0.75vw, 12px);
+    letter-spacing: 0.1em;
+    font-size: clamp(9px, 0.68vw, 11px);
     color: var(--ink);
-    margin-bottom: 5px;
+    line-height: 1.3;
   }
-  .s-experience .detail .bullets {
+  .s-experience .exp-col .bullets {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(12px, 0.85vw, 14px);
-    line-height: 1.45;
+    font-size: clamp(11px, 0.78vw, 13px);
+    line-height: 1.4;
     color: var(--ink);
-    margin: 0;
+    margin: 4px 0 0 0;
     padding: 0;
     list-style: none;
+    flex: 1 1 0;
+    overflow: hidden;
   }
-  .s-experience .detail .bullets li::before {
+  .s-experience .exp-col .bullets li {
+    margin-bottom: 4px;
+  }
+  .s-experience .exp-col .bullets li::before {
     content: '— ';
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
 
   /* ═══════════════════════════════════════════════
-     SLIDE 4 — SKILLS & EDUCATION
+     SLIDE 4 — SKILLS TREEMAP
   ═══════════════════════════════════════════════ */
   .s-skills { background: var(--paper); }
   .s-skills .frame {
@@ -412,7 +451,7 @@
     inset: clamp(70px, 7.5vh, 120px) clamp(36px, 3.6vw, 80px) clamp(90px, 9.5vh, 140px);
     display: grid;
     grid-template-rows: auto 1fr;
-    gap: clamp(18px, 2vh, 32px);
+    gap: clamp(14px, 1.6vh, 24px);
     z-index: 5;
   }
   .s-skills .topbar {
@@ -433,82 +472,128 @@
     font-size: clamp(11px, 0.82vw, 13px);
     color: var(--ink); text-align: right;
   }
-  .s-skills .body {
+
+  /* Treemap grid — two rows, varied column widths to give size-weight feel */
+  .s-skills .treemap {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: clamp(32px, 4vw, 72px);
+    grid-template-columns: 2fr 1.4fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: clamp(8px, 0.9vw, 14px);
+    overflow: hidden;
   }
-  .s-skills .col { display: flex; flex-direction: column; gap: clamp(20px, 2.4vh, 36px); }
-  .s-skills .section-label {
+
+  /* Individual treemap cell */
+  .s-skills .tm-cell {
+    border: 1.5px solid var(--ink);
+    padding: clamp(10px, 1.1vw, 18px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Filled variant (SAP cell — most prominent) */
+  .s-skills .tm-cell.filled {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .s-skills .tm-cell.filled .tm-label,
+  .s-skills .tm-cell.filled .tm-items li,
+  .s-skills .tm-cell.filled .tm-items span {
+    color: var(--paper);
+  }
+  .s-skills .tm-cell.filled .tm-label {
+    border-bottom-color: rgba(240,235,222,0.4);
+  }
+
+  .s-skills .tm-label {
     font-family: 'Hanken Grotesk', sans-serif;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: clamp(11px, 0.8vw, 13px);
+    letter-spacing: 0.18em;
+    font-size: clamp(10px, 0.76vw, 12px);
     color: var(--ink);
-    border-bottom: 1.5px solid var(--ink);
+    border-bottom: 1px solid rgba(31,43,224,0.3);
     padding-bottom: 6px;
-    margin-bottom: 2px;
+    flex-shrink: 0;
   }
-  .s-skills .skill-chips {
+  .s-skills .tm-items {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+    flex: 1 1 0;
+  }
+  .s-skills .tm-items li {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(12px, 0.88vw, 14px);
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .s-skills .tm-items li::before {
+    content: '· ';
+    font-family: 'DM Mono', monospace;
+  }
+  /* For language / education cells: use inline tags */
+  .s-skills .tm-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
+    flex: 1 1 0;
+    align-content: flex-start;
+    overflow: hidden;
   }
-  .s-skills .chip {
+  .s-skills .tm-tag {
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(11px, 0.8vw, 13px);
-    border: 1.5px solid var(--ink);
-    padding: 4px 11px;
+    font-size: clamp(11px, 0.78vw, 12px);
+    border: 1px solid var(--ink);
+    padding: 3px 9px;
     letter-spacing: 0.04em;
     color: var(--ink);
     line-height: 1.3;
   }
-  .s-skills .edu-item {
-    border-left: 2px solid var(--ink);
-    padding-left: clamp(14px, 1.4vw, 22px);
-    margin-bottom: clamp(12px, 1.4vh, 20px);
+  .s-skills .tm-cell.filled .tm-tag {
+    border-color: rgba(240,235,222,0.5);
+    color: var(--paper);
   }
-  .s-skills .edu-item .yr {
+  /* Education cell spans 2 rows in last column */
+  .s-skills .tm-cell.span2 {
+    grid-row: 1 / 3;
+  }
+  .s-skills .edu-block {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.2vh, 18px);
+    flex: 1 1 0;
+    overflow: hidden;
+  }
+  .s-skills .edu-entry .yr {
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(11px, 0.78vw, 12px);
+    font-size: clamp(10px, 0.72vw, 11px);
     letter-spacing: 0.06em;
     color: var(--ink);
     margin-bottom: 3px;
   }
-  .s-skills .edu-item .deg {
+  .s-skills .edu-entry .deg {
     font-family: 'Newsreader', Georgia, serif;
     font-weight: 400;
-    font-size: clamp(16px, 1.3vw, 23px);
-    line-height: 1.15;
+    font-size: clamp(14px, 1.1vw, 20px);
+    line-height: 1.1;
     color: var(--ink);
     margin-bottom: 2px;
   }
-  .s-skills .edu-item .inst {
+  .s-skills .edu-entry .inst {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(12px, 0.85vw, 14px);
-    line-height: 1.4;
+    font-size: clamp(11px, 0.78vw, 13px);
+    line-height: 1.35;
     color: var(--ink);
+    opacity: 0.8;
   }
-  .s-skills .lang-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(10px, 1.2vh, 16px);
-  }
-  .s-skills .lang-item .lang-name {
-    font-family: 'Newsreader', Georgia, serif;
-    font-weight: 400;
-    font-size: clamp(18px, 1.5vw, 26px);
-    color: var(--ink);
-    line-height: 1;
-    margin-bottom: 2px;
-  }
-  .s-skills .lang-item .lang-level {
-    font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(11px, 0.78vw, 12px);
-    letter-spacing: 0.06em;
-    color: var(--ink);
-    opacity: 0.7;
+  .s-skills .edu-divider {
+    height: 1px;
+    background: rgba(31,43,224,0.2);
   }
 
   /* ═══════════════════════════════════════════════
@@ -662,148 +747,194 @@
       <div class="pagenum">02 / 05</div>
     </section>
 
-    <!-- ═══════ SLIDE 3 — EXPERIENCE ═══════ -->
+    <!-- ═══════ SLIDE 3 — EXPERIENCE (horizontal, oldest → newest) ═══════ -->
     <section class="slide s-experience hairlines">
       <div class="frame">
         <div class="topbar">
           <div class="h">Experience</div>
           <div class="lab-tag">5 roles · 2018 – present</div>
         </div>
-        <div class="list">
-          <div class="exp-row">
-            <div class="yr">2025 –<br/>present</div>
-            <div class="detail">
-              <div class="role">IT Project Manager</div>
-              <div class="company">Robert Bosch (SEA) Pte. Ltd. · Singapore</div>
-              <ul class="bullets">
-                <li>Led SAP BTP initiatives integrating e-commerce frontend with SAP ERP via APIs; extended LLM connections for AI-driven automated order creation from unstructured email inputs.</li>
-                <li>Piloted commercial return solution on SAP BTP — automated submissions and budget validation, eliminating manual processing across APAC markets.</li>
-              </ul>
-            </div>
+
+        <!-- Timeline rail with year markers -->
+        <div class="timeline-rail">
+          <div class="t-node">
+            <div class="dot"></div>
+            <div class="yr">2018</div>
           </div>
-          <div class="exp-row">
-            <div class="yr">2023 –<br/>2025</div>
-            <div class="detail">
-              <div class="role">SAP Consultant</div>
-              <div class="company">Continental Automotive Pte. Ltd. · Singapore</div>
-              <ul class="bullets">
-                <li>End-to-end SAP S/4HANA implementation across Purchase-to-Pay lifecycle; global process transformation with multi-plant go-lives.</li>
-              </ul>
-            </div>
+          <div class="t-node">
+            <div class="dot"></div>
+            <div class="yr">2020</div>
           </div>
-          <div class="exp-row">
-            <div class="yr">2021 –<br/>2023</div>
-            <div class="detail">
-              <div class="role">Head of Material Management</div>
-              <div class="company">Festo Pte. Ltd. · Singapore</div>
-              <ul class="bullets">
-                <li>Led 4-member team across ASEAN &amp; Pacific; owned supply network planning, delivery performance, and inventory management KPIs.</li>
-              </ul>
-            </div>
+          <div class="t-node">
+            <div class="dot"></div>
+            <div class="yr">2021</div>
           </div>
-          <div class="exp-row">
-            <div class="yr">2020 –<br/>2021</div>
-            <div class="detail">
-              <div class="role">Process Expert</div>
-              <div class="company">Festo Pte. Ltd. · Singapore</div>
-              <ul class="bullets">
-                <li>Supply network planning rollout across ASEAN &amp; Pacific — improved delivery performance and inventory levels by 20%.</li>
-              </ul>
-            </div>
+          <div class="t-node">
+            <div class="dot"></div>
+            <div class="yr">2023</div>
           </div>
-          <div class="exp-row">
-            <div class="yr">2018 –<br/>2020</div>
-            <div class="detail">
-              <div class="role">Global Supply Chain Specialist</div>
-              <div class="company">Festo SE &amp; Co. KG · Esslingen, Germany</div>
-              <ul class="bullets">
-                <li>International material planning and logistics; redesigned return shipment processes to improve reliability, efficiency, and data transparency.</li>
-              </ul>
-            </div>
+          <div class="t-node">
+            <div class="dot" style="background:var(--ink);outline:3px solid var(--ink);outline-offset:3px;"></div>
+            <div class="yr">2025 –</div>
+          </div>
+        </div>
+
+        <!-- 5 columns left = oldest, right = latest -->
+        <div class="cols">
+          <div class="exp-col">
+            <div class="role">Global Supply Chain Specialist</div>
+            <div class="company">Festo SE &amp; Co. KG · Esslingen, Germany</div>
+            <ul class="bullets">
+              <li>International material planning &amp; logistics across global markets.</li>
+              <li>Redesigned return shipment processes — improved reliability, efficiency, and data transparency.</li>
+            </ul>
+          </div>
+          <div class="exp-col">
+            <div class="role">Process Expert</div>
+            <div class="company">Festo Pte. Ltd. · Singapore</div>
+            <ul class="bullets">
+              <li>Supply network planning rollout across ASEAN &amp; Pacific.</li>
+              <li>Improved delivery performance and inventory levels by 20%.</li>
+            </ul>
+          </div>
+          <div class="exp-col">
+            <div class="role">Head of Material Management</div>
+            <div class="company">Festo Pte. Ltd. · Singapore</div>
+            <ul class="bullets">
+              <li>Led 4-member team across ASEAN &amp; Pacific operations.</li>
+              <li>Drove continuous improvement against key supply chain KPIs.</li>
+            </ul>
+          </div>
+          <div class="exp-col">
+            <div class="role">SAP Consultant</div>
+            <div class="company">Continental Automotive · Singapore</div>
+            <ul class="bullets">
+              <li>End-to-end SAP S/4HANA implementation, Purchase-to-Pay lifecycle.</li>
+              <li>Multi-plant global go-lives with configuration and data migration.</li>
+            </ul>
+          </div>
+          <div class="exp-col" style="border-left-width:2.5px;">
+            <div class="role">IT Project Manager</div>
+            <div class="company">Robert Bosch (SEA) · Singapore</div>
+            <ul class="bullets">
+              <li>SAP BTP middleware integrating e-commerce with SAP ERP via APIs + LLMs.</li>
+              <li>Automated return solution eliminating manual processing across APAC.</li>
+              <li>Data-driven reporting: backend integration &amp; dashboard visualisation.</li>
+            </ul>
           </div>
         </div>
       </div>
       <div class="pagenum">03 / 05</div>
     </section>
 
-    <!-- ═══════ SLIDE 4 — SKILLS & EDUCATION ═══════ -->
+    <!-- ═══════ SLIDE 4 — SKILLS TREEMAP ═══════ -->
     <section class="slide s-skills hairlines">
       <div class="frame">
         <div class="topbar">
           <div class="h">Skills &amp; Education</div>
-          <div class="lab-tag">Tools · Certifications · Languages</div>
+          <div class="lab-tag">Tools · Domain · Languages · Background</div>
         </div>
-        <div class="body">
-          <div class="col">
-            <div>
-              <div class="section-label">Technical Skills</div>
-              <div class="skill-chips" style="margin-top:12px;">
-                <span class="chip">SAP BTP</span>
-                <span class="chip">SAP S/4HANA</span>
-                <span class="chip">Power BI</span>
-                <span class="chip">SQL</span>
-                <span class="chip">JIRA</span>
-                <span class="chip">API / Swagger</span>
-                <span class="chip">LLM Integration</span>
-                <span class="chip">Data Migration</span>
-                <span class="chip">Purchase-to-Pay</span>
-                <span class="chip">Supply Chain</span>
+
+        <!-- Treemap: 4 cols × 2 rows, last col spans both rows -->
+        <div class="treemap">
+
+          <!-- Row 1 Col 1 — SAP Platform (large, filled) -->
+          <div class="tm-cell filled">
+            <div class="tm-label">SAP Platform</div>
+            <ul class="tm-items">
+              <li>SAP Business Technology Platform (BTP)</li>
+              <li>SAP S/4HANA</li>
+              <li>Purchase-to-Pay (P2P)</li>
+              <li>Data Migration &amp; Configuration</li>
+              <li>C_TS452 Certified · Nov 2024</li>
+            </ul>
+          </div>
+
+          <!-- Row 1 Col 2 — Data & Integration -->
+          <div class="tm-cell">
+            <div class="tm-label">Data &amp; Integration</div>
+            <ul class="tm-items">
+              <li>Power BI</li>
+              <li>SQL Database Tools</li>
+              <li>API / Swagger</li>
+              <li>LLM Integration</li>
+              <li>Automated Reporting</li>
+            </ul>
+          </div>
+
+          <!-- Row 1 Col 3 — Project Delivery -->
+          <div class="tm-cell">
+            <div class="tm-label">Project Delivery</div>
+            <ul class="tm-items">
+              <li>JIRA / Agile</li>
+              <li>Global Go-Live</li>
+              <li>Stakeholder Mgmt</li>
+              <li>APAC Operations</li>
+            </ul>
+          </div>
+
+          <!-- Col 4, spans both rows — Education & Languages -->
+          <div class="tm-cell span2">
+            <div class="tm-label">Background</div>
+            <div class="edu-block">
+              <div class="edu-entry">
+                <div class="yr">2014 – 2018</div>
+                <div class="deg">BSc Industrial Engineering &amp; Management</div>
+                <div class="inst">Karlsruhe Institute of Technology, Germany</div>
               </div>
-            </div>
-            <div>
-              <div class="section-label">Languages</div>
-              <div class="lang-row" style="margin-top:12px;">
-                <div class="lang-item">
-                  <div class="lang-name">English</div>
-                  <div class="lang-level">Advanced</div>
-                </div>
-                <div class="lang-item">
-                  <div class="lang-name">Chinese</div>
-                  <div class="lang-level">Native</div>
-                </div>
-                <div class="lang-item">
-                  <div class="lang-name">German</div>
-                  <div class="lang-level">Advanced</div>
-                </div>
-                <div class="lang-item">
-                  <div class="lang-name">Malay</div>
-                  <div class="lang-level">Intermediate</div>
+              <div class="edu-divider"></div>
+              <div class="edu-entry">
+                <div class="yr">Nov 2024</div>
+                <div class="deg">C_TS452 SAP S/4HANA</div>
+                <div class="inst">Sourcing &amp; Procurement</div>
+              </div>
+              <div class="edu-divider"></div>
+              <div>
+                <div class="tm-label" style="border:none;padding:0;margin-bottom:8px;">Languages</div>
+                <div class="tm-tags">
+                  <span class="tm-tag">English ·· Advanced</span>
+                  <span class="tm-tag">Chinese ·· Native</span>
+                  <span class="tm-tag">German ·· Advanced</span>
+                  <span class="tm-tag">Malay ·· Intermediate</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col">
-            <div>
-              <div class="section-label">Education</div>
-              <div style="margin-top:12px;">
-                <div class="edu-item">
-                  <div class="yr">2014 – 2018</div>
-                  <div class="deg">BSc Industrial Engineering &amp; Management</div>
-                  <div class="inst">Karlsruhe Institute of Technology, Germany</div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="section-label">Certification</div>
-              <div style="margin-top:12px;">
-                <div class="edu-item">
-                  <div class="yr">Nov 2024</div>
-                  <div class="deg">C_TS452 SAP S/4HANA</div>
-                  <div class="inst">Sourcing and Procurement</div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div class="section-label">Domain Expertise</div>
-              <div class="skill-chips" style="margin-top:12px;">
-                <span class="chip">P2P Lifecycle</span>
-                <span class="chip">APAC Operations</span>
-                <span class="chip">Global Go-Live</span>
-                <span class="chip">Stakeholder Mgmt</span>
-                <span class="chip">Agile / JIRA</span>
-              </div>
-            </div>
+
+          <!-- Row 2 Col 1 — Supply Chain -->
+          <div class="tm-cell">
+            <div class="tm-label">Supply Chain</div>
+            <ul class="tm-items">
+              <li>Supply Network Planning</li>
+              <li>Inventory Management</li>
+              <li>Delivery Performance</li>
+              <li>Material Planning</li>
+              <li>Return Logistics</li>
+            </ul>
           </div>
+
+          <!-- Row 2 Col 2 — Domain Expertise -->
+          <div class="tm-cell">
+            <div class="tm-label">Domain Expertise</div>
+            <ul class="tm-items">
+              <li>Business Transformation</li>
+              <li>Process Automation</li>
+              <li>E-Commerce Integration</li>
+              <li>Cross-functional Teams</li>
+            </ul>
+          </div>
+
+          <!-- Row 2 Col 3 — Locations / Reach -->
+          <div class="tm-cell">
+            <div class="tm-label">Global Reach</div>
+            <ul class="tm-items">
+              <li>Singapore (base)</li>
+              <li>ASEAN &amp; Pacific</li>
+              <li>Germany / Europe</li>
+              <li>Multi-plant rollouts</li>
+            </ul>
+          </div>
+
         </div>
       </div>
       <div class="pagenum">04 / 05</div>
