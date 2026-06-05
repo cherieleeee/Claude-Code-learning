@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Cherie Lee — Self Introduction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,300;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper:    #F0EBDE;
+    --paper-2:  #E6E0CE;
+    --ink:      #1F2BE0;
+    --ink-soft: #5560E5;
+    --grid:     rgba(31, 43, 224, 0.10);
+    --rule:     #1F2BE0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #0a0a0a; }
+  body {
+    font-family: 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  .deck { position: fixed; inset: 0; display: grid; place-items: center; }
+  .stage {
+    position: relative;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .stage::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: clamp(28px, 2.2vw, 44px) clamp(28px, 2.2vw, 44px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 280ms ease;
+    z-index: 2;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* ─── TYPE SYSTEM ──────────────────────────────── */
+  .disp {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .body-tx {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .micro {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .mono {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  .pagenum {
+    position: absolute;
+    right: clamp(28px, 2.4vw, 48px);
+    bottom: clamp(48px, 4.8vh, 76px);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    z-index: 9;
+  }
+
+  .hairlines::before,
+  .hairlines::after {
+    content: '';
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    height: 1.5px;
+    background: var(--ink);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .hairlines::before { top: clamp(28px, 2.6vh, 48px); }
+  .hairlines::after  { bottom: clamp(20px, 2vh, 32px); }
+
+  /* ─── EDIT BUTTON & NAV HINT ──────────────────── */
+  .bottom-controls {
+    position: fixed;
+    left: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(20px, 2.2vh, 36px);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .edit-btn {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(10px, 0.75vw, 12px);
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    padding: 5px 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 180ms, color 180ms;
+    line-height: 1.4;
+  }
+  .edit-btn:hover,
+  .edit-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .nav-hint {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* Editable mode: show borders on hovered content */
+  body.edit-mode [contenteditable="true"] {
+    outline: 1.5px dashed rgba(31, 43, 224, 0.4);
+    outline-offset: 2px;
+    cursor: text;
+  }
+  body.edit-mode [contenteditable="true"]:focus {
+    outline: 1.5px solid var(--ink);
+    background: rgba(240, 235, 222, 0.6);
+  }
+
+  /* ─── DECORATIVE ───────────────────────────────── */
+  .pixel-glitch {
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .pixel-glitch svg { display: block; width: 100%; height: 100%; }
+
+  .qr-block {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 1.5px;
+    background: var(--paper);
+    padding: 4px;
+    box-shadow: 0 0 0 1.5px var(--paper);
+  }
+  .qr-block .px { background: var(--paper); }
+  .qr-block .px.on { background: var(--ink); }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 1 — COVER
+  ═══════════════════════════════════════════════ */
+  .s-cover { background: var(--paper); }
+
+  .s-cover .titlewrap {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    top: clamp(70px, 8vh, 140px);
+    z-index: 5;
+    max-width: 58%;
+  }
+  .s-cover .name {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(72px, min(9vw, 15vh), 180px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .s-cover .role-line {
+    margin-top: clamp(16px, 2vh, 28px);
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: clamp(13px, 1vw, 17px);
+    color: var(--ink);
+  }
+  .s-cover .tagline {
+    margin-top: clamp(10px, 1.2vh, 18px);
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(22px, min(2.2vw, 3.6vh), 40px);
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .s-cover .pixel-glitch {
+    top: clamp(60px, 6vh, 110px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(260px, 30vw, 520px);
+    bottom: clamp(110px, 12vh, 180px);
+  }
+
+  .s-cover .vstack {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 60px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex; flex-direction: column;
+    gap: clamp(10px, 1.2vh, 18px);
+    align-items: end;
+  }
+  .s-cover .vstack .v-row {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.85vw, 14px);
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .s-cover .cfooter {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(580px, 38vw, 800px);
+    bottom: clamp(76px, 8vh, 116px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.2vh, 16px);
+    z-index: 5;
+  }
+  .s-cover .cfooter .colf {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(13px, 0.9vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .s-cover .cfooter .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(10px, 0.72vw, 12px);
+    margin-bottom: 3px;
+    color: var(--ink);
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 2 — PROFILE STATEMENT
+  ═══════════════════════════════════════════════ */
+  .s-profile { background: var(--paper); }
+  .s-profile .stmt-wrap {
+    position: absolute;
+    left: clamp(60px, 7vw, 140px);
+    right: clamp(60px, 7vw, 140px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+  }
+  .s-profile .kicker {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: clamp(12px, 0.88vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(18px, 2vh, 30px);
+  }
+  .s-profile .stmt {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(38px, min(4.2vw, 7.2vh), 82px);
+    line-height: 1.08;
+    letter-spacing: -0.004em;
+    color: var(--ink);
+  }
+  .s-profile .stmt em {
+    font-style: italic;
+    font-weight: 300;
+  }
+  .s-profile .attr {
+    margin-top: clamp(28px, 3vh, 48px);
+    display: flex;
+    gap: clamp(14px, 1.6vw, 28px);
+    align-items: center;
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(12px, 1.4vh, 20px);
+    flex-wrap: wrap;
+  }
+  .s-profile .attr .pill {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    border: 1px solid rgba(31, 43, 224, 0.35);
+    padding: 3px 10px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 3 — EXPERIENCE
+  ═══════════════════════════════════════════════ */
+  .s-experience { background: var(--paper); }
+  .s-experience .frame {
+    position: absolute;
+    inset: clamp(70px, 7.5vh, 120px) clamp(36px, 3.6vw, 80px) clamp(90px, 9.5vh, 140px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(16px, 1.8vh, 28px);
+    z-index: 5;
+  }
+  .s-experience .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(10px, 1.2vh, 18px);
+    gap: 30px;
+  }
+  .s-experience .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(40px, min(4.4vw, 7.5vh), 88px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-experience .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink); text-align: right;
+  }
+  .s-experience .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: stretch;
+    overflow: hidden;
+  }
+  .s-experience .exp-row {
+    display: grid;
+    grid-template-columns: clamp(90px, 9vw, 140px) 1fr;
+    gap: clamp(16px, 1.8vw, 32px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+    padding: clamp(8px, 1vh, 14px) 0;
+    flex: 1 1 0;
+    align-items: start;
+  }
+  .s-experience .yr {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    padding-top: 4px;
+    line-height: 1.3;
+  }
+  .s-experience .detail .role {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(18px, 1.5vw, 28px);
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0 0 3px 0;
+  }
+  .s-experience .detail .company {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--ink);
+    margin-bottom: 5px;
+  }
+  .s-experience .detail .bullets {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(12px, 0.85vw, 14px);
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .s-experience .detail .bullets li::before {
+    content: '— ';
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 0.9em;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 4 — SKILLS & EDUCATION
+  ═══════════════════════════════════════════════ */
+  .s-skills { background: var(--paper); }
+  .s-skills .frame {
+    position: absolute;
+    inset: clamp(70px, 7.5vh, 120px) clamp(36px, 3.6vw, 80px) clamp(90px, 9.5vh, 140px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(18px, 2vh, 32px);
+    z-index: 5;
+  }
+  .s-skills .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(10px, 1.2vh, 18px);
+    gap: 30px;
+  }
+  .s-skills .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(40px, min(4.4vw, 7.5vh), 88px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-skills .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink); text-align: right;
+  }
+  .s-skills .body {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(32px, 4vw, 72px);
+  }
+  .s-skills .col { display: flex; flex-direction: column; gap: clamp(20px, 2.4vh, 36px); }
+  .s-skills .section-label {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: clamp(11px, 0.8vw, 13px);
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 6px;
+    margin-bottom: 2px;
+  }
+  .s-skills .skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .s-skills .chip {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.8vw, 13px);
+    border: 1.5px solid var(--ink);
+    padding: 4px 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .s-skills .edu-item {
+    border-left: 2px solid var(--ink);
+    padding-left: clamp(14px, 1.4vw, 22px);
+    margin-bottom: clamp(12px, 1.4vh, 20px);
+  }
+  .s-skills .edu-item .yr {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.78vw, 12px);
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .s-skills .edu-item .deg {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(16px, 1.3vw, 23px);
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .s-skills .edu-item .inst {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(12px, 0.85vw, 14px);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .s-skills .lang-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 1.2vh, 16px);
+  }
+  .s-skills .lang-item .lang-name {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(18px, 1.5vw, 26px);
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .s-skills .lang-item .lang-level {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.78vw, 12px);
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    opacity: 0.7;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 5 — CLOSING / CONTACT
+  ═══════════════════════════════════════════════ */
+  .s-closing { background: var(--paper); }
+  .s-closing .pixel-glitch {
+    top: clamp(80px, 9vh, 150px);
+    left: clamp(36px, 3.6vw, 80px);
+    width: clamp(200px, 24vw, 420px);
+    bottom: clamp(210px, 22vh, 340px);
+    opacity: 0.7;
+  }
+  .s-closing .qr-block {
+    top: clamp(80px, 9vh, 150px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(68px, 5vw, 96px);
+    height: clamp(68px, 5vw, 96px);
+  }
+  .s-closing .titlewrap {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 80px);
+    top: clamp(80px, 10vh, 160px);
+    z-index: 5;
+    max-width: 58%;
+    text-align: right;
+  }
+  .s-closing .ktag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(14px, 1.6vh, 24px);
+  }
+  .s-closing .ttl {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(52px, min(7vw, 12vh), 150px);
+    line-height: 0.96;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .s-closing .col-footer {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(100px, 10vh, 152px);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: clamp(18px, 2.2vw, 40px);
+    z-index: 5;
+  }
+  .s-closing .col-footer > div {
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 16px);
+  }
+  .s-closing .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(10px, 0.75vw, 12px);
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .s-closing .ftxt {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(13px, 0.88vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden SVG defs -->
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <pattern id="vstripes" width="3" height="100" patternUnits="userSpaceOnUse">
+      <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.2" />
+    </pattern>
+  </defs>
+</svg>
+
+<div class="deck">
+  <div class="stage">
+
+    <!-- ═══════ SLIDE 1 — COVER ═══════ -->
+    <section class="slide s-cover hairlines active">
+
+      <div class="titlewrap">
+        <h1 class="name">Cherie<br/>Lee</h1>
+        <div class="role-line">IT Project Manager · SAP BTP Specialist</div>
+        <div class="tagline">Bridging technology and business transformation <em>across global markets.</em></div>
+      </div>
+
+      <div class="pixel-glitch" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="vs1" width="2.4" height="100" patternUnits="userSpaceOnUse">
+              <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" />
+            </pattern>
+          </defs>
+          <rect x="36" y="0"  width="38" height="14" fill="url(#vs1)"/>
+          <rect x="22" y="14" width="50" height="12" fill="url(#vs1)"/>
+          <rect x="34" y="26" width="46" height="11" fill="url(#vs1)"/>
+          <rect x="16" y="37" width="60" height="13" fill="url(#vs1)"/>
+          <rect x="28" y="50" width="48" height="11" fill="url(#vs1)"/>
+          <rect x="18" y="61" width="62" height="14" fill="url(#vs1)"/>
+          <rect x="34" y="75" width="44" height="12" fill="url(#vs1)"/>
+          <rect x="22" y="87" width="50" height="13" fill="url(#vs1)"/>
+        </svg>
+      </div>
+
+      <div class="vstack">
+        <div class="v-row">Singapore · Prague</div>
+        <div class="v-row">open to opportunities</div>
+        <div class="v-row">june 2026</div>
+      </div>
+
+      <div class="cfooter">
+        <div class="colf">
+          <div class="ftag">Contact</div>
+          <div>+65 8881 9855<br/>cherielcr@gmail.com</div>
+        </div>
+        <div class="colf" style="margin-top:12px;">
+          <div class="ftag">Based in</div>
+          <div>Singapore &amp; Prague, Czech Republic</div>
+        </div>
+      </div>
+
+      <div class="pagenum">01 / 05</div>
+    </section>
+
+    <!-- ═══════ SLIDE 2 — PROFILE ═══════ -->
+    <section class="slide s-profile hairlines">
+      <div class="stmt-wrap">
+        <div class="kicker">Professional Profile</div>
+        <p class="stmt">I turn <em>complex enterprise systems</em> into measurable business outcomes — from SAP S/4HANA rollouts across global plants to AI-driven automation on SAP BTP.</p>
+        <div class="attr">
+          <span class="pill">SAP BTP · S/4HANA</span>
+          <span class="pill">Global Rollouts</span>
+          <span class="pill">Supply Chain</span>
+          <span class="pill">AI Automation</span>
+          <span class="pill">Power BI</span>
+          <span class="pill">7+ Years in APAC &amp; Europe</span>
+        </div>
+      </div>
+      <div class="pagenum">02 / 05</div>
+    </section>
+
+    <!-- ═══════ SLIDE 3 — EXPERIENCE ═══════ -->
+    <section class="slide s-experience hairlines">
+      <div class="frame">
+        <div class="topbar">
+          <div class="h">Experience</div>
+          <div class="lab-tag">5 roles · 2018 – present</div>
+        </div>
+        <div class="list">
+          <div class="exp-row">
+            <div class="yr">2025 –<br/>present</div>
+            <div class="detail">
+              <div class="role">IT Project Manager</div>
+              <div class="company">Robert Bosch (SEA) Pte. Ltd. · Singapore</div>
+              <ul class="bullets">
+                <li>Led SAP BTP initiatives integrating e-commerce frontend with SAP ERP via APIs; extended LLM connections for AI-driven automated order creation from unstructured email inputs.</li>
+                <li>Piloted commercial return solution on SAP BTP — automated submissions and budget validation, eliminating manual processing across APAC markets.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="yr">2023 –<br/>2025</div>
+            <div class="detail">
+              <div class="role">SAP Consultant</div>
+              <div class="company">Continental Automotive Pte. Ltd. · Singapore</div>
+              <ul class="bullets">
+                <li>End-to-end SAP S/4HANA implementation across Purchase-to-Pay lifecycle; global process transformation with multi-plant go-lives.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="yr">2021 –<br/>2023</div>
+            <div class="detail">
+              <div class="role">Head of Material Management</div>
+              <div class="company">Festo Pte. Ltd. · Singapore</div>
+              <ul class="bullets">
+                <li>Led 4-member team across ASEAN &amp; Pacific; owned supply network planning, delivery performance, and inventory management KPIs.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="yr">2020 –<br/>2021</div>
+            <div class="detail">
+              <div class="role">Process Expert</div>
+              <div class="company">Festo Pte. Ltd. · Singapore</div>
+              <ul class="bullets">
+                <li>Supply network planning rollout across ASEAN &amp; Pacific — improved delivery performance and inventory levels by 20%.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="yr">2018 –<br/>2020</div>
+            <div class="detail">
+              <div class="role">Global Supply Chain Specialist</div>
+              <div class="company">Festo SE &amp; Co. KG · Esslingen, Germany</div>
+              <ul class="bullets">
+                <li>International material planning and logistics; redesigned return shipment processes to improve reliability, efficiency, and data transparency.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagenum">03 / 05</div>
+    </section>
+
+    <!-- ═══════ SLIDE 4 — SKILLS & EDUCATION ═══════ -->
+    <section class="slide s-skills hairlines">
+      <div class="frame">
+        <div class="topbar">
+          <div class="h">Skills &amp; Education</div>
+          <div class="lab-tag">Tools · Certifications · Languages</div>
+        </div>
+        <div class="body">
+          <div class="col">
+            <div>
+              <div class="section-label">Technical Skills</div>
+              <div class="skill-chips" style="margin-top:12px;">
+                <span class="chip">SAP BTP</span>
+                <span class="chip">SAP S/4HANA</span>
+                <span class="chip">Power BI</span>
+                <span class="chip">SQL</span>
+                <span class="chip">JIRA</span>
+                <span class="chip">API / Swagger</span>
+                <span class="chip">LLM Integration</span>
+                <span class="chip">Data Migration</span>
+                <span class="chip">Purchase-to-Pay</span>
+                <span class="chip">Supply Chain</span>
+              </div>
+            </div>
+            <div>
+              <div class="section-label">Languages</div>
+              <div class="lang-row" style="margin-top:12px;">
+                <div class="lang-item">
+                  <div class="lang-name">English</div>
+                  <div class="lang-level">Advanced</div>
+                </div>
+                <div class="lang-item">
+                  <div class="lang-name">Chinese</div>
+                  <div class="lang-level">Native</div>
+                </div>
+                <div class="lang-item">
+                  <div class="lang-name">German</div>
+                  <div class="lang-level">Advanced</div>
+                </div>
+                <div class="lang-item">
+                  <div class="lang-name">Malay</div>
+                  <div class="lang-level">Intermediate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div>
+              <div class="section-label">Education</div>
+              <div style="margin-top:12px;">
+                <div class="edu-item">
+                  <div class="yr">2014 – 2018</div>
+                  <div class="deg">BSc Industrial Engineering &amp; Management</div>
+                  <div class="inst">Karlsruhe Institute of Technology, Germany</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="section-label">Certification</div>
+              <div style="margin-top:12px;">
+                <div class="edu-item">
+                  <div class="yr">Nov 2024</div>
+                  <div class="deg">C_TS452 SAP S/4HANA</div>
+                  <div class="inst">Sourcing and Procurement</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="section-label">Domain Expertise</div>
+              <div class="skill-chips" style="margin-top:12px;">
+                <span class="chip">P2P Lifecycle</span>
+                <span class="chip">APAC Operations</span>
+                <span class="chip">Global Go-Live</span>
+                <span class="chip">Stakeholder Mgmt</span>
+                <span class="chip">Agile / JIRA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagenum">04 / 05</div>
+    </section>
+
+    <!-- ═══════ SLIDE 5 — CLOSING / CONTACT ═══════ -->
+    <section class="slide s-closing hairlines">
+
+      <div class="pixel-glitch" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="vs5" width="2.4" height="100" patternUnits="userSpaceOnUse">
+              <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" />
+            </pattern>
+          </defs>
+          <rect x="0"  y="0"  width="48" height="13" fill="url(#vs5)"/>
+          <rect x="14" y="13" width="56" height="12" fill="url(#vs5)"/>
+          <rect x="0"  y="25" width="64" height="14" fill="url(#vs5)"/>
+          <rect x="20" y="39" width="50" height="13" fill="url(#vs5)"/>
+          <rect x="6"  y="52" width="60" height="14" fill="url(#vs5)"/>
+          <rect x="18" y="66" width="48" height="13" fill="url(#vs5)"/>
+          <rect x="0"  y="79" width="56" height="14" fill="url(#vs5)"/>
+          <rect x="20" y="93" width="44" height="7"  fill="url(#vs5)"/>
+        </svg>
+      </div>
+
+      <div class="qr-block" aria-hidden="true">
+        <span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span>
+        <span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span>
+        <span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px on"></span>
+        <span class="px on"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span>
+        <span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span>
+        <span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span>
+        <span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span>
+        <span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span>
+      </div>
+
+      <div class="titlewrap">
+        <div class="ktag">Let's connect</div>
+        <h2 class="ttl">Open to<br/>the right<br/>opportunity.</h2>
+      </div>
+
+      <div class="col-footer">
+        <div>
+          <div class="ftag">Email</div>
+          <div class="ftxt">cherielcr@gmail.com</div>
+        </div>
+        <div>
+          <div class="ftag">Phone</div>
+          <div class="ftxt">+65 8881 9855</div>
+        </div>
+        <div>
+          <div class="ftag">Location</div>
+          <div class="ftxt">Singapore &amp;<br/>Prague, Czech Republic</div>
+        </div>
+        <div>
+          <div class="ftag">Availability</div>
+          <div class="ftxt">Open to IT PM, SAP BTP, and digital transformation roles globally.</div>
+        </div>
+      </div>
+
+      <div class="pagenum">05 / 05</div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Bottom controls: Edit button + nav hint -->
+<div class="bottom-controls">
+  <button class="edit-btn" id="editBtn" onclick="toggleEdit()">Edit</button>
+  <span class="nav-hint">← / → · space</span>
+</div>
+
+<script>
+  // ── Navigation ──────────────────────────────────────────────
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+
+  function show(i) {
+    if (i < 0) i = 0;
+    if (i > slides.length - 1) i = slides.length - 1;
+    slides[current].classList.remove('active');
+    slides[i].classList.add('active');
+    current = i;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    // Don't steal keys when editing text
+    if (document.activeElement && document.activeElement.isContentEditable) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp')                 { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home')                                             { e.preventDefault(); show(0); }
+    else if (e.key === 'End')                                              { e.preventDefault(); show(slides.length - 1); }
+  });
+
+  let tx = null;
+  document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (tx == null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) show(current + (dx < 0 ? 1 : -1));
+    tx = null;
+  });
+
+  // ── Edit mode ───────────────────────────────────────────────
+  let editActive = false;
+
+  // Elements that should be editable
+  const EDITABLE_SELECTORS = [
+    '.name', '.role-line', '.tagline',
+    '.cfooter .colf',
+    '.vstack .v-row',
+    '.stmt',
+    '.attr .pill',
+    '.kicker',
+    '.exp-row .role', '.exp-row .company', '.exp-row .bullets li',
+    '.chip',
+    '.deg', '.inst', '.yr',
+    '.lang-name', '.lang-level',
+    '.ttl', '.ktag',
+    '.col-footer .ftxt',
+    '.col-footer .ftag',
+    '.topbar .h', '.topbar .lab-tag',
+    '.section-label',
+  ];
+
+  function toggleEdit() {
+    editActive = !editActive;
+    const btn = document.getElementById('editBtn');
+    btn.classList.toggle('active', editActive);
+    btn.textContent = editActive ? 'Done' : 'Edit';
+    document.body.classList.toggle('edit-mode', editActive);
+
+    EDITABLE_SELECTORS.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        el.contentEditable = editActive ? 'true' : 'false';
+      });
+    });
+  }
+</script>
+</body>
+</html>
