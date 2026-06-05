@@ -134,6 +134,44 @@
   .nav-btns button:hover { opacity: 1; }
   .nav-btns button:disabled { opacity: 0.18; cursor: default; }
 
+  /* Edit button — bottom right */
+  .edit-ctrl {
+    position: fixed;
+    right: clamp(28px, 2.4vw, 48px);
+    bottom: clamp(44px, 4.4vh, 70px);
+    z-index: 12;
+  }
+  .edit-ctrl button {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.9vw, 15px);
+    color: var(--ink);
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    padding: 6px 18px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    opacity: 0.55;
+    transition: opacity 160ms ease, background 160ms ease;
+  }
+  .edit-ctrl button:hover { opacity: 1; }
+  .edit-ctrl button.active {
+    background: var(--ink);
+    color: var(--paper);
+    opacity: 1;
+  }
+
+  /* Editable element hints */
+  .editing [contenteditable="true"] {
+    outline: 1px dashed rgba(31, 43, 224, 0.35);
+    cursor: text;
+    border-radius: 2px;
+  }
+  .editing [contenteditable="true"]:focus {
+    outline: 1.5px solid var(--ink);
+    background: rgba(31, 43, 224, 0.05);
+  }
+
   .pixel-glitch {
     position: absolute;
     pointer-events: none;
@@ -699,6 +737,10 @@
   <button id="btn-next" onclick="show(current + 1)">→</button>
 </div>
 
+<div class="edit-ctrl">
+  <button id="btn-edit" onclick="toggleEdit()">Edit</button>
+</div>
+
 <script>
   const slides = Array.from(document.querySelectorAll('.slide'));
   let current = 0;
@@ -718,6 +760,29 @@
     else if (e.key === 'Home')                                                  { e.preventDefault(); show(0); }
     else if (e.key === 'End')                                                   { e.preventDefault(); show(slides.length - 1); }
   });
+  const EDITABLE = [
+    '.s-cover .title', '.s-cover .subkicker .l', '.s-cover .subkicker .ed',
+    '.s-cover .v-row', '.s-cover .colf div', '.s-cover .ftag',
+    '.s-achieve .topbar .h', '.s-achieve .topbar .lab-tag',
+    '.s-achieve .col-content h3', '.s-achieve .bullet-list li',
+    '.s-achieve .p-topbar', '.s-achieve .personal-text', '.s-achieve .skills-line',
+    '.s-exp .topbar .h', '.s-exp .exp-year', '.s-exp .exp-role',
+    '.s-exp .exp-company', '.s-exp .bullet-list li',
+  ];
+  let editing = false;
+  function toggleEdit() {
+    editing = !editing;
+    const btn = document.getElementById('btn-edit');
+    btn.textContent = editing ? 'Done' : 'Edit';
+    btn.classList.toggle('active', editing);
+    document.querySelector('.deck').classList.toggle('editing', editing);
+    EDITABLE.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        el.contentEditable = editing ? 'true' : 'false';
+      });
+    });
+  }
+
   let tx = null;
   document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
   document.addEventListener('touchend', (e) => {
