@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signal — Cover Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400;1,8..60,600;1,8..60,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --c-bg: #1c2644;
+      --c-bg-alt: #232f55;
+      --c-bg-light: #f0ece3;
+      --c-bg-light-alt: #e6e0d4;
+      --c-fg: #e2dcd0;
+      --c-fg-2: #8a96a8;
+      --c-fg-3: #4e5a6e;
+      --c-fg-light: #1a2030;
+      --c-fg-light-2: #5a6270;
+      --c-fg-light-3: #9aa0a8;
+      --c-accent: #c8a870;
+      --c-border: #2e3d5c;
+      --c-border-light: #cac4b4;
+      --f-display: "Source Serif 4", Georgia, serif;
+      --f-heading: "Source Serif 4", Georgia, serif;
+      --f-body: "DM Sans", system-ui, sans-serif;
+      --f-mono: "IBM Plex Mono", monospace;
+      --sz-display: 9.5vw;
+      --sz-h1: 5.2vw;
+      --sz-h2: 3vw;
+      --sz-h3: 1.9vw;
+      --sz-lead: 1.4vw;
+      --sz-body: 1.05vw;
+      --sz-caption: 0.82vw;
+      --sz-label: 0.7vw;
+      --pad-x: 7.5vw;
+      --pad-y: 5.5vh;
+      --gap-lg: 4vh;
+      --gap-md: 2.5vh;
+      --gap-sm: 1.2vh;
+      --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur-enter: 0.65s;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: var(--c-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      width: 100vw; height: 100vh;
+      position: relative;
+      padding: var(--pad-y) var(--pad-x);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+    }
+    .slide.dark { background: var(--c-bg); color: var(--c-fg); }
+
+    /* Grid texture */
+    .slide.dark::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none; z-index: 0;
+    }
+    .slide.dark > * { position: relative; z-index: 1; }
+
+    /* Animations — trigger immediately via is-active */
+    [data-anim] { opacity: 0; }
+    .slide.is-active [data-anim] {
+      animation-duration: var(--dur-enter);
+      animation-timing-function: var(--ease-enter);
+      animation-fill-mode: forwards;
+    }
+    .slide.is-active [data-anim="fade-up"]    { animation-name: kFadeUp; }
+    .slide.is-active [data-anim="fade-in"]    { animation-name: kFadeIn; }
+    .slide.is-active [data-anim="reveal-right"]{ animation-name: kRevealRight; }
+
+    [data-delay="0"] { animation-delay: 0s; }
+    [data-delay="1"] { animation-delay: 0.12s; }
+    [data-delay="2"] { animation-delay: 0.26s; }
+    [data-delay="3"] { animation-delay: 0.44s; }
+    [data-delay="4"] { animation-delay: 0.62s; }
+
+    @keyframes kFadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes kFadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes kRevealRight {
+      from { clip-path: inset(0 100% 0 0); opacity: 1; }
+      to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+    }
+
+    /* Typography */
+    .display {
+      font-family: var(--f-display);
+      font-size: var(--sz-display);
+      font-weight: 700;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      font-family: var(--f-body);
+      font-size: var(--sz-lead);
+      font-weight: 400;
+      line-height: 1.58;
+    }
+    .label {
+      font-family: var(--f-mono);
+      font-size: var(--sz-label);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .display em, .h1 em {
+      font-style: italic;
+      color: var(--c-accent);
+    }
+    .lead em {
+      font-style: italic;
+      color: var(--c-accent);
+      font-family: var(--f-heading);
+    }
+    .muted { color: var(--c-fg-2); }
+
+    /* Decorative rule */
+    .rule { width: 36px; height: 1px; background: var(--c-accent); }
+
+    /* Cover layout */
+    .slide--cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .cover-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: flex-end;
+      gap: var(--gap-md);
+    }
+    .cover-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: var(--gap-lg);
+      padding-top: var(--gap-sm);
+      border-top: 1px solid var(--c-border);
+    }
+  </style>
+</head>
+<body>
+  <section class="slide dark slide--cover is-active">
+    <div class="cover-body">
+      <div class="label muted" data-anim="fade-in" data-delay="0">
+        EA · AP Operations · Senior Leadership Presentation
+      </div>
+
+      <div class="rule" data-anim="reveal-right" data-delay="1"></div>
+
+      <h1 class="display" data-anim="fade-up" data-delay="2">
+        Delivering<br /><em>What</em> Matters
+      </h1>
+
+      <p class="lead" style="font-family: var(--f-heading); font-style: italic; max-width: 52%; color: var(--c-fg-2);"
+         data-anim="fade-up" data-delay="3">
+        Two strategic rollouts. Six markets. One year of results that moved the business forward.
+      </p>
+
+      <div class="cover-meta" data-anim="fade-in" data-delay="4">
+        <span class="label muted">[Your Name] · Digital Operations</span>
+        <span class="label muted">FY 2024–2025 · Achievements Review</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
