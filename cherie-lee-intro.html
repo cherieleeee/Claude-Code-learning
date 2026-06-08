@@ -485,13 +485,13 @@
     flex-shrink: 0;
   }
 
-  /* Two-column body — centered vertically, text starts at top */
+  /* Two-column body — columns share equal height; content top-aligned */
   .s-skills .two-col {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: clamp(32px, 4vw, 68px);
     overflow: hidden;
-    align-items: start;
+    align-items: stretch;
     margin: auto 0;
   }
 
@@ -533,15 +533,15 @@
     color: var(--ink);
   }
 
-  /* RIGHT column — horizontal distribution */
+  /* RIGHT column — 3 parts stacked, distributed top-to-bottom */
   .s-skills .right-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: clamp(16px, 1.8vw, 28px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     overflow: hidden;
     border-left: 1.5px solid var(--ink);
     padding-left: clamp(20px, 2.2vw, 36px);
-    align-items: start;
+    align-self: stretch;
   }
 
   /* Quote block */
