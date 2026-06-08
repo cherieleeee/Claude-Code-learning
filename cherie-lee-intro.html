@@ -533,14 +533,15 @@
     color: var(--ink);
   }
 
-  /* RIGHT column */
+  /* RIGHT column — horizontal distribution */
   .s-skills .right-col {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(14px, 1.8vh, 24px);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: clamp(16px, 1.8vw, 28px);
     overflow: hidden;
     border-left: 1.5px solid var(--ink);
     padding-left: clamp(20px, 2.2vw, 36px);
+    align-items: start;
   }
 
   /* Quote block */
