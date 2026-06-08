@@ -1015,8 +1015,9 @@
 
   // ── Edit mode ───────────────────────────────────────────────
   let editActive = false;
+  const STORAGE_KEY = 'cherie-deck-content';
 
-  // Elements that should be editable
+  // Every editable element gets a stable data-ck (content-key) on first load
   const EDITABLE_SELECTORS = [
     '.name', '.role-line', '.tagline',
     '.cfooter .colf',
@@ -1024,16 +1025,56 @@
     '.stmt',
     '.attr .pill',
     '.kicker',
-    '.exp-row .role', '.exp-row .company', '.exp-row .bullets li',
-    '.chip',
-    '.deg', '.inst', '.yr',
-    '.lang-name', '.lang-level',
+    '.exp-col .role', '.exp-col .company', '.exp-col .bullets li',
+    '.pg-title',
+    '.tm-label', '.tm-items li', '.tm-tag',
+    '.deg', '.inst', '.edu-entry .yr',
     '.ttl', '.ktag',
     '.col-footer .ftxt',
     '.col-footer .ftag',
     '.topbar .h', '.topbar .lab-tag',
-    '.section-label',
   ];
+
+  function allEditables() {
+    const seen = new Set();
+    const els = [];
+    EDITABLE_SELECTORS.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        if (!seen.has(el)) { seen.add(el); els.push(el); }
+      });
+    });
+    return els;
+  }
+
+  // Assign stable keys once
+  function assignKeys() {
+    allEditables().forEach((el, i) => {
+      if (!el.dataset.ck) el.dataset.ck = 'ck-' + i;
+    });
+  }
+
+  // Persist all editable content to localStorage
+  function saveContent() {
+    const data = {};
+    allEditables().forEach(el => {
+      if (el.dataset.ck) data[el.dataset.ck] = el.innerHTML;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // Restore saved content from localStorage
+  function restoreContent() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      allEditables().forEach(el => {
+        if (el.dataset.ck && data[el.dataset.ck] !== undefined) {
+          el.innerHTML = data[el.dataset.ck];
+        }
+      });
+    } catch (e) { /* corrupt storage — ignore */ }
+  }
 
   function toggleEdit() {
     editActive = !editActive;
@@ -1042,12 +1083,16 @@
     btn.textContent = editActive ? 'Done' : 'Edit';
     document.body.classList.toggle('edit-mode', editActive);
 
-    EDITABLE_SELECTORS.forEach(sel => {
-      document.querySelectorAll(sel).forEach(el => {
-        el.contentEditable = editActive ? 'true' : 'false';
-      });
+    allEditables().forEach(el => {
+      el.contentEditable = editActive ? 'true' : 'false';
     });
+
+    if (!editActive) saveContent();
   }
+
+  // On load: assign keys then restore any saved content
+  assignKeys();
+  restoreContent();
 </script>
 </body>
 </html>
