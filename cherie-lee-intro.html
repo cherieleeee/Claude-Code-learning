@@ -447,44 +447,37 @@
     z-index: 5;
   }
 
-  /* Top meta row */
-  .s-skills .meta-row {
+  /* Title row: big italic heading left + small tag bottom-right */
+  .s-skills .title-row {
     display: flex;
+    align-items: flex-end;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: clamp(10px, 1.2vh, 18px);
+    margin-bottom: clamp(14px, 1.8vh, 26px);
     flex-shrink: 0;
+    gap: 20px;
   }
-  .s-skills .meta-row .section-tag {
-    font-family: 'Hanken Grotesk', sans-serif;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: clamp(10px, 0.75vw, 12px);
+  .s-skills .pg-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(44px, min(5.6vw, 9.5vh), 110px);
+    line-height: 1.0;
     color: var(--ink);
+    letter-spacing: -0.005em;
+    margin: 0;
   }
-  .s-skills .meta-row .corner-pill {
+  .s-skills .title-tag {
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(10px, 0.75vw, 12px);
+    font-size: clamp(11px, 0.82vw, 13px);
     letter-spacing: 0.06em;
     color: var(--ink);
-    border: 1px solid var(--ink);
-    padding: 3px 12px;
-  }
-
-  /* Big headline */
-  .s-skills .pg-headline {
-    font-family: 'Newsreader', Georgia, serif;
-    font-weight: 400;
-    font-size: clamp(28px, min(3.4vw, 5.8vh), 66px);
-    line-height: 1.05;
-    letter-spacing: -0.005em;
-    color: var(--ink);
-    margin: 0 0 clamp(14px, 1.8vh, 26px) 0;
+    opacity: 0.65;
+    white-space: nowrap;
+    padding-bottom: clamp(6px, 0.8vh, 12px);
     flex-shrink: 0;
   }
 
-  /* Headline rule */
+  /* Rule under heading */
   .s-skills .pg-rule {
     height: 1.5px;
     background: var(--ink);
@@ -492,13 +485,14 @@
     flex-shrink: 0;
   }
 
-  /* Two-column body */
+  /* Two-column body — centered vertically, text starts at top */
   .s-skills .two-col {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: clamp(32px, 4vw, 68px);
-    flex: 1 1 0;
     overflow: hidden;
+    align-items: start;
+    margin: auto 0;
   }
 
   /* LEFT — numbered list */
@@ -525,7 +519,7 @@
   }
   .s-skills .n-item .n-body {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(12px, 0.88vw, 14px);
+    font-size: clamp(13px, 0.96vw, 15px);
     line-height: 1.5;
     color: var(--ink);
   }
@@ -839,14 +833,11 @@
     <section class="slide s-skills hairlines">
       <div class="frame">
 
-        <!-- Meta row -->
-        <div class="meta-row">
-          <span class="section-tag">Skills &amp; Education</span>
-          <span class="corner-pill">Expertise at a Glance</span>
+        <!-- Title row -->
+        <div class="title-row">
+          <h2 class="pg-title">Skills &amp; Education</h2>
+          <span class="title-tag">Expertise at a Glance</span>
         </div>
-
-        <!-- Big headline -->
-        <h2 class="pg-headline">Seven years turning enterprise complexity into measurable outcomes.</h2>
         <div class="pg-rule"></div>
 
         <div class="two-col">
@@ -1028,20 +1019,24 @@
 
   // Every editable element gets a stable data-ck (content-key) on first load
   const EDITABLE_SELECTORS = [
+    // Slide 1 — Cover
     '.name', '.role-line', '.tagline',
     '.cfooter .colf',
     '.vstack .v-row',
-    '.stmt',
-    '.attr .pill',
-    '.kicker',
+    // Slide 2 — Profile
+    '.stmt', '.attr .pill', '.kicker',
+    // Slide 3 — Experience
+    '.s-experience .pg-title',
     '.exp-col .role', '.exp-col .company', '.exp-col .bullets li',
-    '.pg-title',
-    '.tm-label', '.tm-items li', '.tm-tag',
-    '.deg', '.inst', '.edu-entry .yr',
+    // Slide 4 — Skills
+    '.s-skills .pg-title', '.s-skills .title-tag',
+    '.n-item .n-body',
+    '.quote-block p',
+    '.stat-box .stat-num', '.stat-box .stat-label',
+    '.lang-row .lang-name', '.lang-row .lang-pill',
+    // Slide 5 — Closing
     '.ttl', '.ktag',
-    '.col-footer .ftxt',
-    '.col-footer .ftag',
-    '.topbar .h', '.topbar .lab-tag',
+    '.col-footer .ftxt', '.col-footer .ftag',
   ];
 
   function allEditables() {
