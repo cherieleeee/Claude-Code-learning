@@ -517,14 +517,20 @@
     padding-top: 2px;
     line-height: 1.4;
   }
-  .s-skills .n-item .n-body {
+  .s-skills .n-item .n-title {
     font-family: 'Hanken Grotesk', sans-serif;
     font-size: clamp(14px, 1.08vw, 16px);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .s-skills .n-item .n-desc {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 1.08vw, 16px);
+    font-weight: 400;
     line-height: 1.5;
     color: var(--ink);
-  }
-  .s-skills .n-item .n-body strong {
-    font-weight: 700;
   }
 
   /* RIGHT column */
@@ -846,23 +852,38 @@
           <div class="numbered-list">
             <div class="n-item">
               <div class="num">01</div>
-              <div class="n-body"><strong>SAP BTP &amp; S/4HANA expertise, end to end.</strong> From configuration and data migration through to go-live across complex global manufacturing plants — I own the full delivery lifecycle, not just a slice of it.</div>
+              <div>
+                <div class="n-title">SAP BTP &amp; S/4HANA expertise, end to end.</div>
+                <div class="n-desc">From configuration and data migration through to go-live across complex global manufacturing plants — I own the full delivery lifecycle, not just a slice of it.</div>
+              </div>
             </div>
             <div class="n-item">
               <div class="num">02</div>
-              <div class="n-body"><strong>AI &amp; integration: connecting the enterprise.</strong> Built middleware linking e-commerce frontends to SAP ERP via APIs, and extended LLM connections to automate order creation from unstructured email and document inputs.</div>
+              <div>
+                <div class="n-title">AI &amp; integration: connecting the enterprise.</div>
+                <div class="n-desc">Built middleware linking e-commerce frontends to SAP ERP via APIs, and extended LLM connections to automate order creation from unstructured email and document inputs.</div>
+              </div>
             </div>
             <div class="n-item">
               <div class="num">03</div>
-              <div class="n-body"><strong>Supply chain leadership, ASEAN &amp; Pacific scale.</strong> Led teams managing supply network planning, delivery performance, and inventory across multi-country operations — improving key metrics by up to 20%.</div>
+              <div>
+                <div class="n-title">Supply chain leadership, ASEAN &amp; Pacific scale.</div>
+                <div class="n-desc">Led teams managing supply network planning, delivery performance, and inventory across multi-country operations — improving key metrics by up to 20%.</div>
+              </div>
             </div>
             <div class="n-item">
               <div class="num">04</div>
-              <div class="n-body"><strong>Data &amp; reporting: Power BI, SQL, automated pipelines.</strong> Designed backend data integration and front-end dashboard visualisation that give stakeholders real-time operational visibility.</div>
+              <div>
+                <div class="n-title">Data &amp; reporting: Power BI, SQL, automated pipelines.</div>
+                <div class="n-desc">Designed backend data integration and front-end dashboard visualisation that give stakeholders real-time operational visibility.</div>
+              </div>
             </div>
             <div class="n-item">
               <div class="num">05</div>
-              <div class="n-body"><strong>Education: Industrial Engineering, KIT Germany.</strong> BSc from Karlsruhe Institute of Technology (2018) plus C_TS452 SAP S/4HANA Sourcing &amp; Procurement certification (Nov 2024).</div>
+              <div>
+                <div class="n-title">Education: Industrial Engineering, KIT Germany.</div>
+                <div class="n-desc">BSc from Karlsruhe Institute of Technology (2018) plus C_TS452 SAP S/4HANA Sourcing &amp; Procurement certification (Nov 2024).</div>
+              </div>
             </div>
           </div>
 
@@ -1030,7 +1051,7 @@
     '.exp-col .role', '.exp-col .company', '.exp-col .bullets li',
     // Slide 4 — Skills
     '.s-skills .pg-title', '.s-skills .title-tag',
-    '.n-item .n-body',
+    '.n-item .n-title', '.n-item .n-desc',
     '.quote-block p',
     '.stat-box .stat-num', '.stat-box .stat-label',
     '.lang-row .lang-name', '.lang-row .lang-pill',
