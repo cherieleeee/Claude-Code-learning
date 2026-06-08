@@ -318,128 +318,119 @@
   }
 
   /* ═══════════════════════════════════════════════
-     SLIDE 3 — EXPERIENCE (horizontal 4-col timeline)
+     SLIDE 3 — EXPERIENCE (4-col card layout)
   ═══════════════════════════════════════════════ */
   .s-experience { background: var(--paper); }
   .s-experience .frame {
     position: absolute;
-    inset: clamp(70px, 7.5vh, 120px) clamp(36px, 3.6vw, 80px) clamp(90px, 9.5vh, 140px);
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-    gap: clamp(14px, 1.6vh, 24px);
-    z-index: 5;
-  }
-  .s-experience .topbar {
-    display: flex; align-items: end; justify-content: space-between;
-    border-bottom: 1.5px solid var(--ink);
-    padding-bottom: clamp(10px, 1.2vh, 18px);
-    gap: 30px;
-  }
-  .s-experience .topbar .h {
-    font-family: 'Newsreader', Georgia, serif;
-    font-size: clamp(40px, min(4.4vw, 7.5vh), 88px);
-    line-height: 0.95;
-    color: var(--ink);
-  }
-  .s-experience .topbar .lab-tag {
-    font-family: 'Hanken Grotesk', sans-serif;
-    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
-    font-size: clamp(11px, 0.82vw, 13px);
-    color: var(--ink); text-align: right;
-  }
-
-  /* Timeline rail */
-  .s-experience .timeline-rail {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    align-items: center;
-    position: relative;
-  }
-  .s-experience .timeline-rail::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0; right: 0;
-    height: 1.5px;
-    background: var(--ink);
-    transform: translateY(-50%);
-    z-index: 0;
-  }
-  .s-experience .t-node {
+    inset: clamp(52px, 5.5vh, 90px) clamp(36px, 3.6vw, 80px) clamp(70px, 7.5vh, 110px);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-  .s-experience .t-node .dot {
-    width: clamp(8px, 0.7vw, 12px);
-    height: clamp(8px, 0.7vw, 12px);
-    background: var(--ink);
-    border-radius: 0;
-    margin-bottom: 6px;
-  }
-  .s-experience .t-node .yr {
-    font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(10px, 0.75vw, 12px);
-    color: var(--ink);
-    letter-spacing: 0.06em;
-    text-align: center;
-    background: var(--paper);
-    padding: 2px 6px;
+    gap: 0;
+    z-index: 5;
   }
 
-  /* 5 columns but we show col 1-4 for the 4 main roles + col 5 for Bosch */
+  /* Big italic heading */
+  .s-experience .pg-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(44px, min(5.6vw, 9.5vh), 110px);
+    line-height: 1.0;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    margin: 0 0 clamp(14px, 1.6vh, 24px) 0;
+  }
+
+  /* Rule under heading */
+  .s-experience .pg-rule {
+    height: 1.5px;
+    background: var(--ink);
+    margin-bottom: clamp(20px, 2.6vh, 40px);
+    flex-shrink: 0;
+  }
+
+  /* 4-column grid */
   .s-experience .cols {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: clamp(12px, 1.4vw, 22px);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
     flex: 1 1 0;
     overflow: hidden;
   }
+
   .s-experience .exp-col {
-    border-left: 1.5px solid var(--ink);
-    padding-left: clamp(10px, 1vw, 16px);
+    padding: 0 clamp(14px, 1.6vw, 28px);
+    border-left: 1px solid rgba(31, 43, 224, 0.25);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0;
     overflow: hidden;
   }
+  .s-experience .exp-col:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .s-experience .exp-col .yr {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.8vw, 13px);
+    color: var(--ink);
+    opacity: 0.55;
+    letter-spacing: 0.04em;
+    margin-bottom: clamp(6px, 0.8vh, 12px);
+    line-height: 1.2;
+  }
+
   .s-experience .exp-col .role {
     font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
     font-weight: 400;
-    font-size: clamp(14px, 1.1vw, 20px);
+    font-size: clamp(20px, 1.8vw, 34px);
     line-height: 1.1;
     color: var(--ink);
-    margin: 0;
+    margin: 0 0 clamp(8px, 1vh, 14px) 0;
   }
+
   .s-experience .exp-col .company {
     font-family: 'Hanken Grotesk', sans-serif;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    font-size: clamp(9px, 0.68vw, 11px);
+    font-size: clamp(9px, 0.65vw, 11px);
     color: var(--ink);
-    line-height: 1.3;
+    line-height: 1.4;
+    margin-bottom: clamp(10px, 1.2vh, 18px);
   }
+
+  /* Thin rule between company and bullets */
+  .s-experience .exp-col .col-rule {
+    height: 1px;
+    background: rgba(31, 43, 224, 0.25);
+    margin-bottom: clamp(10px, 1.2vh, 18px);
+    flex-shrink: 0;
+  }
+
   .s-experience .exp-col .bullets {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(11px, 0.78vw, 13px);
-    line-height: 1.4;
+    font-size: clamp(12px, 0.85vw, 14px);
+    line-height: 1.5;
     color: var(--ink);
-    margin: 4px 0 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
-    flex: 1 1 0;
     overflow: hidden;
   }
   .s-experience .exp-col .bullets li {
-    margin-bottom: 4px;
+    display: flex;
+    gap: 8px;
+    margin-bottom: clamp(5px, 0.7vh, 9px);
   }
   .s-experience .exp-col .bullets li::before {
-    content: '— ';
-    font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: 0.85em;
+    content: '–';
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+    opacity: 0.7;
   }
 
   /* ═══════════════════════════════════════════════
@@ -747,81 +738,63 @@
       <div class="pagenum">02 / 05</div>
     </section>
 
-    <!-- ═══════ SLIDE 3 — EXPERIENCE (horizontal, oldest → newest) ═══════ -->
+    <!-- ═══════ SLIDE 3 — EXPERIENCE (4-col, oldest → newest) ═══════ -->
     <section class="slide s-experience hairlines">
       <div class="frame">
-        <div class="topbar">
-          <div class="h">Experience</div>
-          <div class="lab-tag">5 roles · 2018 – present</div>
-        </div>
 
-        <!-- Timeline rail with year markers -->
-        <div class="timeline-rail">
-          <div class="t-node">
-            <div class="dot"></div>
-            <div class="yr">2018</div>
-          </div>
-          <div class="t-node">
-            <div class="dot"></div>
-            <div class="yr">2020</div>
-          </div>
-          <div class="t-node">
-            <div class="dot"></div>
-            <div class="yr">2021</div>
-          </div>
-          <div class="t-node">
-            <div class="dot"></div>
-            <div class="yr">2023</div>
-          </div>
-          <div class="t-node">
-            <div class="dot" style="background:var(--ink);outline:3px solid var(--ink);outline-offset:3px;"></div>
-            <div class="yr">2025 –</div>
-          </div>
-        </div>
+        <h2 class="pg-title">Professional Experiences</h2>
+        <div class="pg-rule"></div>
 
-        <!-- 5 columns left = oldest, right = latest -->
         <div class="cols">
+
+          <!-- Col 1: Festo Germany -->
           <div class="exp-col">
+            <div class="yr">2018 – 2020</div>
             <div class="role">Global Supply Chain Specialist</div>
             <div class="company">Festo SE &amp; Co. KG · Esslingen, Germany</div>
+            <div class="col-rule"></div>
             <ul class="bullets">
-              <li>International material planning &amp; logistics across global markets.</li>
-              <li>Redesigned return shipment processes — improved reliability, efficiency, and data transparency.</li>
+              <li>Managed international material planning and logistics while redesigning return shipment processes to improve delivery reliability, efficiency and data transparency.</li>
             </ul>
           </div>
+
+          <!-- Col 2: Festo Singapore (both roles combined) -->
           <div class="exp-col">
-            <div class="role">Process Expert</div>
+            <div class="yr">2020 – 2023</div>
+            <div class="role">Process Expert → Head of Material Management</div>
             <div class="company">Festo Pte. Ltd. · Singapore</div>
+            <div class="col-rule"></div>
             <ul class="bullets">
-              <li>Supply network planning rollout across ASEAN &amp; Pacific.</li>
-              <li>Improved delivery performance and inventory levels by 20%.</li>
+              <li>Led supply network planning across ASEAN &amp; Pacific, improving delivery performance and inventory levels by 20%.</li>
+              <li>Led 4-member team in Material Management and Supply Network Planning across ASEAN and Pacific operations.</li>
             </ul>
           </div>
+
+          <!-- Col 3: Continental -->
           <div class="exp-col">
-            <div class="role">Head of Material Management</div>
-            <div class="company">Festo Pte. Ltd. · Singapore</div>
-            <ul class="bullets">
-              <li>Led 4-member team across ASEAN &amp; Pacific operations.</li>
-              <li>Drove continuous improvement against key supply chain KPIs.</li>
-            </ul>
-          </div>
-          <div class="exp-col">
+            <div class="yr">2023 – 2025</div>
             <div class="role">SAP Consultant</div>
-            <div class="company">Continental Automotive · Singapore</div>
+            <div class="company">Continental Automotive Pte. Ltd. · Singapore</div>
+            <div class="col-rule"></div>
             <ul class="bullets">
-              <li>End-to-end SAP S/4HANA implementation, Purchase-to-Pay lifecycle.</li>
-              <li>Multi-plant global go-lives with configuration and data migration.</li>
+              <li>Led end-to-end SAP S/4HANA implementation across Purchase-to-Pay lifecycle, driving global process transformation.</li>
+              <li>Managed configuration, data migration, system optimization, and successful go-lives for complex manufacturing plants globally.</li>
             </ul>
           </div>
-          <div class="exp-col" style="border-left-width:2.5px;">
+
+          <!-- Col 4: Bosch (current) -->
+          <div class="exp-col">
+            <div class="yr">2025 – present</div>
             <div class="role">IT Project Manager</div>
-            <div class="company">Robert Bosch (SEA) · Singapore</div>
+            <div class="company">Robert Bosch (SEA) Pte. Ltd. · Singapore</div>
+            <div class="col-rule"></div>
             <ul class="bullets">
-              <li>SAP BTP middleware integrating e-commerce with SAP ERP via APIs + LLMs.</li>
-              <li>Automated return solution eliminating manual processing across APAC.</li>
-              <li>Data-driven reporting: backend integration &amp; dashboard visualisation.</li>
+              <li>Lead SAP BTP initiatives for global digital ordering, building middleware integrating customer frontend with SAP ERP via APIs.</li>
+              <li>Directed pilot go-live of commercial return solution on SAP BTP, enabling automated return submissions across East Asia.</li>
+              <li>Managed data-driven reporting with backend integration and front-end dashboard visualization.</li>
             </ul>
           </div>
+
         </div>
       </div>
       <div class="pagenum">03 / 05</div>
