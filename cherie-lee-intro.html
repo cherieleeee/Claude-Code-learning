@@ -435,157 +435,191 @@
   }
 
   /* ═══════════════════════════════════════════════
-     SLIDE 4 — SKILLS TREEMAP
+     SLIDE 4 — SKILLS (two-col editorial layout)
   ═══════════════════════════════════════════════ */
   .s-skills { background: var(--paper); }
   .s-skills .frame {
     position: absolute;
-    inset: clamp(70px, 7.5vh, 120px) clamp(36px, 3.6vw, 80px) clamp(90px, 9.5vh, 140px);
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: clamp(14px, 1.6vh, 24px);
-    z-index: 5;
-  }
-  .s-skills .topbar {
-    display: flex; align-items: end; justify-content: space-between;
-    border-bottom: 1.5px solid var(--ink);
-    padding-bottom: clamp(10px, 1.2vh, 18px);
-    gap: 30px;
-  }
-  .s-skills .topbar .h {
-    font-family: 'Newsreader', Georgia, serif;
-    font-size: clamp(40px, min(4.4vw, 7.5vh), 88px);
-    line-height: 0.95;
-    color: var(--ink);
-  }
-  .s-skills .topbar .lab-tag {
-    font-family: 'Hanken Grotesk', sans-serif;
-    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
-    font-size: clamp(11px, 0.82vw, 13px);
-    color: var(--ink); text-align: right;
-  }
-
-  /* Treemap grid — two rows, varied column widths to give size-weight feel */
-  .s-skills .treemap {
-    display: grid;
-    grid-template-columns: 2fr 1.4fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: clamp(8px, 0.9vw, 14px);
-    overflow: hidden;
-  }
-
-  /* Individual treemap cell */
-  .s-skills .tm-cell {
-    border: 1.5px solid var(--ink);
-    padding: clamp(10px, 1.1vw, 18px);
+    inset: clamp(52px, 5.5vh, 88px) clamp(36px, 3.6vw, 80px) clamp(60px, 6.5vh, 100px);
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    overflow: hidden;
-    position: relative;
-  }
-  /* Filled variant (SAP cell — most prominent) */
-  .s-skills .tm-cell.filled {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .s-skills .tm-cell.filled .tm-label,
-  .s-skills .tm-cell.filled .tm-items li,
-  .s-skills .tm-cell.filled .tm-items span {
-    color: var(--paper);
-  }
-  .s-skills .tm-cell.filled .tm-label {
-    border-bottom-color: rgba(240,235,222,0.4);
+    gap: 0;
+    z-index: 5;
   }
 
-  .s-skills .tm-label {
+  /* Top meta row */
+  .s-skills .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: clamp(10px, 1.2vh, 18px);
+    flex-shrink: 0;
+  }
+  .s-skills .meta-row .section-tag {
     font-family: 'Hanken Grotesk', sans-serif;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-size: clamp(10px, 0.76vw, 12px);
-    color: var(--ink);
-    border-bottom: 1px solid rgba(31,43,224,0.3);
-    padding-bottom: 6px;
-    flex-shrink: 0;
-  }
-  .s-skills .tm-items {
-    list-style: none;
-    margin: 0; padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    overflow: hidden;
-    flex: 1 1 0;
-  }
-  .s-skills .tm-items li {
-    font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(12px, 0.88vw, 14px);
-    line-height: 1.3;
+    letter-spacing: 0.2em;
+    font-size: clamp(10px, 0.75vw, 12px);
     color: var(--ink);
   }
-  .s-skills .tm-items li::before {
-    content: '· ';
-    font-family: 'DM Mono', monospace;
-  }
-  /* For language / education cells: use inline tags */
-  .s-skills .tm-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    flex: 1 1 0;
-    align-content: flex-start;
-    overflow: hidden;
-  }
-  .s-skills .tm-tag {
+  .s-skills .meta-row .corner-pill {
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(11px, 0.78vw, 12px);
-    border: 1px solid var(--ink);
-    padding: 3px 9px;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-    line-height: 1.3;
-  }
-  .s-skills .tm-cell.filled .tm-tag {
-    border-color: rgba(240,235,222,0.5);
-    color: var(--paper);
-  }
-  /* Education cell spans 2 rows in last column */
-  .s-skills .tm-cell.span2 {
-    grid-row: 1 / 3;
-  }
-  .s-skills .edu-block {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(10px, 1.2vh, 18px);
-    flex: 1 1 0;
-    overflow: hidden;
-  }
-  .s-skills .edu-entry .yr {
-    font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: clamp(10px, 0.72vw, 11px);
+    font-size: clamp(10px, 0.75vw, 12px);
     letter-spacing: 0.06em;
     color: var(--ink);
-    margin-bottom: 3px;
+    border: 1px solid var(--ink);
+    padding: 3px 12px;
   }
-  .s-skills .edu-entry .deg {
+
+  /* Big headline */
+  .s-skills .pg-headline {
     font-family: 'Newsreader', Georgia, serif;
     font-weight: 400;
-    font-size: clamp(14px, 1.1vw, 20px);
-    line-height: 1.1;
+    font-size: clamp(28px, min(3.4vw, 5.8vh), 66px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
     color: var(--ink);
-    margin-bottom: 2px;
+    margin: 0 0 clamp(14px, 1.8vh, 26px) 0;
+    flex-shrink: 0;
   }
-  .s-skills .edu-entry .inst {
+
+  /* Headline rule */
+  .s-skills .pg-rule {
+    height: 1.5px;
+    background: var(--ink);
+    margin-bottom: clamp(16px, 2vh, 28px);
+    flex-shrink: 0;
+  }
+
+  /* Two-column body */
+  .s-skills .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(32px, 4vw, 68px);
+    flex: 1 1 0;
+    overflow: hidden;
+  }
+
+  /* LEFT — numbered list */
+  .s-skills .numbered-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.3vh, 18px);
+    overflow: hidden;
+  }
+  .s-skills .n-item {
+    display: grid;
+    grid-template-columns: clamp(28px, 2.2vw, 40px) 1fr;
+    gap: clamp(10px, 1vw, 16px);
+    align-items: start;
+  }
+  .s-skills .n-item .num {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.8vw, 13px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0.55;
+    padding-top: 2px;
+    line-height: 1.4;
+  }
+  .s-skills .n-item .n-body {
     font-family: 'Hanken Grotesk', sans-serif;
-    font-size: clamp(11px, 0.78vw, 13px);
+    font-size: clamp(12px, 0.88vw, 14px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .s-skills .n-item .n-body strong {
+    font-weight: 700;
+  }
+
+  /* RIGHT column */
+  .s-skills .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(14px, 1.8vh, 24px);
+    overflow: hidden;
+    border-left: 1.5px solid var(--ink);
+    padding-left: clamp(20px, 2.2vw, 36px);
+  }
+
+  /* Quote block */
+  .s-skills .quote-block {
+    border-left: 3px solid var(--ink);
+    padding-left: clamp(14px, 1.4vw, 22px);
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .s-skills .quote-block p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(14px, 1.1vw, 19px);
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* Stat boxes row */
+  .s-skills .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(8px, 0.9vw, 14px);
+    flex-shrink: 0;
+  }
+  .s-skills .stat-box {
+    border: 1.5px solid var(--ink);
+    padding: clamp(8px, 1vh, 14px) clamp(10px, 1vw, 16px);
+  }
+  .s-skills .stat-box .stat-num {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(28px, 2.6vw, 48px);
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .s-skills .stat-box .stat-label {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(10px, 0.72vw, 12px);
     line-height: 1.35;
     color: var(--ink);
-    opacity: 0.8;
+    opacity: 0.7;
   }
-  .s-skills .edu-divider {
-    height: 1px;
-    background: rgba(31,43,224,0.2);
+
+  /* Languages section */
+  .s-skills .lang-section { flex-shrink: 0; }
+  .s-skills .lang-section .lang-heading {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: clamp(10px, 0.72vw, 12px);
+    color: var(--ink);
+    margin-bottom: clamp(8px, 1vh, 14px);
+  }
+  .s-skills .lang-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+    padding: clamp(5px, 0.7vh, 9px) 0;
+  }
+  .s-skills .lang-row:last-child { border-bottom: none; }
+  .s-skills .lang-row .lang-name {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(12px, 0.9vw, 15px);
+    color: var(--ink);
+  }
+  .s-skills .lang-row .lang-pill {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(10px, 0.72vw, 12px);
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    border: 1px solid rgba(31, 43, 224, 0.4);
+    padding: 2px 10px;
+    background: rgba(31, 43, 224, 0.06);
   }
 
   /* ═══════════════════════════════════════════════
@@ -801,114 +835,89 @@
       <div class="pagenum">03 / 05</div>
     </section>
 
-    <!-- ═══════ SLIDE 4 — SKILLS TREEMAP ═══════ -->
+    <!-- ═══════ SLIDE 4 — SKILLS & EDUCATION ═══════ -->
     <section class="slide s-skills hairlines">
       <div class="frame">
-        <div class="topbar">
-          <div class="h">Skills &amp; Education</div>
-          <div class="lab-tag">Tools · Domain · Languages · Background</div>
+
+        <!-- Meta row -->
+        <div class="meta-row">
+          <span class="section-tag">Skills &amp; Education</span>
+          <span class="corner-pill">Expertise at a Glance</span>
         </div>
 
-        <!-- Treemap: 4 cols × 2 rows, last col spans both rows -->
-        <div class="treemap">
+        <!-- Big headline -->
+        <h2 class="pg-headline">Seven years turning enterprise complexity into measurable outcomes.</h2>
+        <div class="pg-rule"></div>
 
-          <!-- Row 1 Col 1 — SAP Platform (large, filled) -->
-          <div class="tm-cell filled">
-            <div class="tm-label">SAP Platform</div>
-            <ul class="tm-items">
-              <li>SAP Business Technology Platform (BTP)</li>
-              <li>SAP S/4HANA</li>
-              <li>Purchase-to-Pay (P2P)</li>
-              <li>Data Migration &amp; Configuration</li>
-              <li>C_TS452 Certified · Nov 2024</li>
-            </ul>
-          </div>
+        <div class="two-col">
 
-          <!-- Row 1 Col 2 — Data & Integration -->
-          <div class="tm-cell">
-            <div class="tm-label">Data &amp; Integration</div>
-            <ul class="tm-items">
-              <li>Power BI</li>
-              <li>SQL Database Tools</li>
-              <li>API / Swagger</li>
-              <li>LLM Integration</li>
-              <li>Automated Reporting</li>
-            </ul>
-          </div>
-
-          <!-- Row 1 Col 3 — Project Delivery -->
-          <div class="tm-cell">
-            <div class="tm-label">Project Delivery</div>
-            <ul class="tm-items">
-              <li>JIRA / Agile</li>
-              <li>Global Go-Live</li>
-              <li>Stakeholder Mgmt</li>
-              <li>APAC Operations</li>
-            </ul>
-          </div>
-
-          <!-- Col 4, spans both rows — Education & Languages -->
-          <div class="tm-cell span2">
-            <div class="tm-label">Background</div>
-            <div class="edu-block">
-              <div class="edu-entry">
-                <div class="yr">2014 – 2018</div>
-                <div class="deg">BSc Industrial Engineering &amp; Management</div>
-                <div class="inst">Karlsruhe Institute of Technology, Germany</div>
-              </div>
-              <div class="edu-divider"></div>
-              <div class="edu-entry">
-                <div class="yr">Nov 2024</div>
-                <div class="deg">C_TS452 SAP S/4HANA</div>
-                <div class="inst">Sourcing &amp; Procurement</div>
-              </div>
-              <div class="edu-divider"></div>
-              <div>
-                <div class="tm-label" style="border:none;padding:0;margin-bottom:8px;">Languages</div>
-                <div class="tm-tags">
-                  <span class="tm-tag">English ·· Advanced</span>
-                  <span class="tm-tag">Chinese ·· Native</span>
-                  <span class="tm-tag">German ·· Advanced</span>
-                  <span class="tm-tag">Malay ·· Intermediate</span>
-                </div>
-              </div>
+          <!-- LEFT: numbered competencies -->
+          <div class="numbered-list">
+            <div class="n-item">
+              <div class="num">01</div>
+              <div class="n-body"><strong>SAP BTP &amp; S/4HANA expertise, end to end.</strong> From configuration and data migration through to go-live across complex global manufacturing plants — I own the full delivery lifecycle, not just a slice of it.</div>
+            </div>
+            <div class="n-item">
+              <div class="num">02</div>
+              <div class="n-body"><strong>AI &amp; integration: connecting the enterprise.</strong> Built middleware linking e-commerce frontends to SAP ERP via APIs, and extended LLM connections to automate order creation from unstructured email and document inputs.</div>
+            </div>
+            <div class="n-item">
+              <div class="num">03</div>
+              <div class="n-body"><strong>Supply chain leadership, ASEAN &amp; Pacific scale.</strong> Led teams managing supply network planning, delivery performance, and inventory across multi-country operations — improving key metrics by up to 20%.</div>
+            </div>
+            <div class="n-item">
+              <div class="num">04</div>
+              <div class="n-body"><strong>Data &amp; reporting: Power BI, SQL, automated pipelines.</strong> Designed backend data integration and front-end dashboard visualisation that give stakeholders real-time operational visibility.</div>
+            </div>
+            <div class="n-item">
+              <div class="num">05</div>
+              <div class="n-body"><strong>Education: Industrial Engineering, KIT Germany.</strong> BSc from Karlsruhe Institute of Technology (2018) plus C_TS452 SAP S/4HANA Sourcing &amp; Procurement certification (Nov 2024).</div>
             </div>
           </div>
 
-          <!-- Row 2 Col 1 — Supply Chain -->
-          <div class="tm-cell">
-            <div class="tm-label">Supply Chain</div>
-            <ul class="tm-items">
-              <li>Supply Network Planning</li>
-              <li>Inventory Management</li>
-              <li>Delivery Performance</li>
-              <li>Material Planning</li>
-              <li>Return Logistics</li>
-            </ul>
-          </div>
+          <!-- RIGHT: quote + stats + languages -->
+          <div class="right-col">
 
-          <!-- Row 2 Col 2 — Domain Expertise -->
-          <div class="tm-cell">
-            <div class="tm-label">Domain Expertise</div>
-            <ul class="tm-items">
-              <li>Business Transformation</li>
-              <li>Process Automation</li>
-              <li>E-Commerce Integration</li>
-              <li>Cross-functional Teams</li>
-            </ul>
-          </div>
+            <div class="quote-block">
+              <p>"I bring the rare combination of deep SAP technical expertise, supply chain domain knowledge, and the lived experience of working across three continents."</p>
+            </div>
 
-          <!-- Row 2 Col 3 — Locations / Reach -->
-          <div class="tm-cell">
-            <div class="tm-label">Global Reach</div>
-            <ul class="tm-items">
-              <li>Singapore (base)</li>
-              <li>ASEAN &amp; Pacific</li>
-              <li>Germany / Europe</li>
-              <li>Multi-plant rollouts</li>
-            </ul>
-          </div>
+            <div class="stats-row">
+              <div class="stat-box">
+                <div class="stat-num">7+</div>
+                <div class="stat-label">Years of enterprise IT &amp; supply chain experience</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num">3</div>
+                <div class="stat-label">Global enterprise employers</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num">4</div>
+                <div class="stat-label">Languages spoken at professional level</div>
+              </div>
+            </div>
 
+            <div class="lang-section">
+              <div class="lang-heading">Languages</div>
+              <div class="lang-row">
+                <span class="lang-name">English</span>
+                <span class="lang-pill">Advanced</span>
+              </div>
+              <div class="lang-row">
+                <span class="lang-name">Chinese (Mandarin)</span>
+                <span class="lang-pill">Native</span>
+              </div>
+              <div class="lang-row">
+                <span class="lang-name">German</span>
+                <span class="lang-pill">Advanced</span>
+              </div>
+              <div class="lang-row">
+                <span class="lang-name">Malay</span>
+                <span class="lang-pill">Intermediate</span>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
       <div class="pagenum">04 / 05</div>
