@@ -687,15 +687,13 @@
   }
   .s-closing .closing-line {
     font-family: 'Newsreader', Georgia, serif;
-    font-weight: 600;
+    font-weight: 400;
     font-size: clamp(22px, min(2.9vw, 5vh), 62px);
-    line-height: 1.1;
+    line-height: 0.96;
     letter-spacing: -0.005em;
     color: var(--ink);
     margin-top: clamp(8px, 1vh, 14px);
     min-height: 1.2em;
-    max-width: 260px;
-    text-align: left;
   }
   .s-closing .ttl {
     font-family: 'Newsreader', Georgia, serif;
@@ -1011,7 +1009,7 @@
       <div class="titlewrap">
         <div class="ktag">Let's connect</div>
         <h2 class="ttl">Open to<br/>the right<br/>opportunity.</h2>
-        <div class="closing-line">Open to <strong>SAP BTP</strong> development, <strong>digital transformation</strong>, and strategic <strong>IT Project</strong> opportunities</div>
+        <div class="closing-line">&nbsp;</div>
       </div>
 
       <div class="col-footer">
@@ -1189,7 +1187,6 @@
     fmtToolbar.style.left = left + 'px';
     fmtToolbar.style.top  = top  + 'px';
 
-    // Reflect current state
     fmtBold.classList.toggle('on', document.queryCommandState('bold'));
     fmtItalic.classList.toggle('on', document.queryCommandState('italic'));
   }
@@ -1197,7 +1194,7 @@
   document.addEventListener('selectionchange', updateToolbar);
 
   fmtBold.addEventListener('mousedown', e => {
-    e.preventDefault(); // keep selection alive
+    e.preventDefault();
     document.execCommand('bold');
     saveContent();
     updateToolbar();
