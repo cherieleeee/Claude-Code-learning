@@ -140,6 +140,34 @@
     pointer-events: none;
   }
 
+  /* Floating format toolbar */
+  #fmt-toolbar {
+    position: fixed;
+    display: none;
+    align-items: center;
+    gap: 4px;
+    background: var(--ink);
+    border: 1.5px solid var(--ink);
+    padding: 3px 6px;
+    z-index: 9999;
+    pointer-events: auto;
+  }
+  #fmt-toolbar.visible { display: flex; }
+  #fmt-toolbar button {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--paper);
+    background: transparent;
+    border: 1px solid rgba(240,235,222,0.3);
+    padding: 2px 7px;
+    cursor: pointer;
+    line-height: 1.4;
+    transition: background 120ms;
+  }
+  #fmt-toolbar button:hover,
+  #fmt-toolbar button.on { background: rgba(240,235,222,0.25); }
+
   /* Editable mode: show borders on hovered content */
   body.edit-mode [contenteditable="true"] {
     outline: 1.5px dashed rgba(31, 43, 224, 0.4);
@@ -1011,6 +1039,12 @@
   </div>
 </div>
 
+<!-- Floating format toolbar (visible on text selection in edit mode) -->
+<div id="fmt-toolbar">
+  <button id="fmt-bold" title="Bold">B</button>
+  <button id="fmt-italic" title="Italic"><em>I</em></button>
+</div>
+
 <!-- Bottom controls: Edit button + nav hint -->
 <div class="bottom-controls">
   <button class="edit-btn" id="editBtn" onclick="toggleEdit()">Edit</button>
@@ -1128,6 +1162,53 @@
 
     if (!editActive) saveContent();
   }
+
+  // ── Format toolbar (Bold / Italic on text selection) ──────
+  const fmtToolbar = document.getElementById('fmt-toolbar');
+  const fmtBold    = document.getElementById('fmt-bold');
+  const fmtItalic  = document.getElementById('fmt-italic');
+
+  function updateToolbar() {
+    if (!editActive) { fmtToolbar.classList.remove('visible'); return; }
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || sel.toString().trim() === '') {
+      fmtToolbar.classList.remove('visible');
+      return;
+    }
+    const range = sel.getRangeAt(0);
+    const rect  = range.getBoundingClientRect();
+    if (rect.width === 0) { fmtToolbar.classList.remove('visible'); return; }
+
+    fmtToolbar.classList.add('visible');
+    const tbW = fmtToolbar.offsetWidth  || 80;
+    const tbH = fmtToolbar.offsetHeight || 32;
+    let left = rect.left + (rect.width - tbW) / 2;
+    let top  = rect.top - tbH - 8 + window.scrollY;
+    left = Math.max(4, Math.min(left, window.innerWidth - tbW - 4));
+    top  = top < 4 ? rect.bottom + 8 + window.scrollY : top;
+    fmtToolbar.style.left = left + 'px';
+    fmtToolbar.style.top  = top  + 'px';
+
+    // Reflect current state
+    fmtBold.classList.toggle('on', document.queryCommandState('bold'));
+    fmtItalic.classList.toggle('on', document.queryCommandState('italic'));
+  }
+
+  document.addEventListener('selectionchange', updateToolbar);
+
+  fmtBold.addEventListener('mousedown', e => {
+    e.preventDefault(); // keep selection alive
+    document.execCommand('bold');
+    saveContent();
+    updateToolbar();
+  });
+
+  fmtItalic.addEventListener('mousedown', e => {
+    e.preventDefault();
+    document.execCommand('italic');
+    saveContent();
+    updateToolbar();
+  });
 
   // On load: assign keys then restore any saved content
   assignKeys();
