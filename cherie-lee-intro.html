@@ -1048,6 +1048,7 @@
 <!-- Bottom controls: Edit button + nav hint -->
 <div class="bottom-controls">
   <button class="edit-btn" id="editBtn" onclick="toggleEdit()">Edit</button>
+  <button class="edit-btn" onclick="clearSaved()">Reset</button>
   <span class="nav-hint">← / → · space</span>
 </div>
 
@@ -1147,6 +1148,11 @@
         }
       });
     } catch (e) { /* corrupt storage — ignore */ }
+  }
+
+  function clearSaved() {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
   }
 
   function toggleEdit() {
