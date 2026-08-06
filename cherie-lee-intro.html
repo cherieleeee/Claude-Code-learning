@@ -1065,11 +1065,8 @@
 <!-- Bottom controls: Edit button + nav hint -->
 <div class="bottom-controls">
   <button class="edit-btn" id="editBtn" onclick="toggleEdit()">Edit</button>
-  <button class="edit-btn" onclick="pickPhoto()">Photo</button>
-  <button class="edit-btn" onclick="exportDeck()">Export</button>
   <button class="edit-btn" onclick="clearSaved()">Reset</button>
   <span class="nav-hint">← / → · space</span>
-  <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="onPhotoChosen(event)">
 </div>
 
 <script>
@@ -1235,74 +1232,9 @@
     updateToolbar();
   });
 
-  // ── Portrait photo (page 5) ─────────────────────────────────
-  // Photo is stored separately from text so Reset never wipes it.
-  const PHOTO_KEY = 'cherie-deck-photo';
-
-  function pickPhoto() {
-    document.getElementById('photoInput').click();
-  }
-
-  function onPhotoChosen(e) {
-    const file = e.target.files && e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      applyPhoto(reader.result);
-      try {
-        localStorage.setItem(PHOTO_KEY, reader.result);
-      } catch (err) {
-        alert('Photo applied, but it is too large to remember between reloads.\n' +
-              'Click Export now to save a copy with the photo baked in.');
-      }
-    };
-    reader.readAsDataURL(file);
-    e.target.value = '';
-  }
-
-  function applyPhoto(dataUri) {
-    const img = document.getElementById('portrait');
-    if (!img) return;
-    img.src = dataUri;
-    img.style.display = 'block';
-  }
-
-  function restorePhoto() {
-    const saved = localStorage.getItem(PHOTO_KEY);
-    if (saved) applyPhoto(saved);
-  }
-
-  // ── Export a self-contained copy (photo + edits baked in) ───
-  function exportDeck() {
-    const clone = document.documentElement.cloneNode(true);
-
-    // Always open on slide 1, whichever slide is on screen right now —
-    // otherwise the exported file starts mid-deck and navigation desyncs.
-    clone.querySelectorAll('.slide').forEach((s, i) => {
-      s.classList.toggle('active', i === 0);
-    });
-
-    // Recipients get a clean deck: no editing chrome.
-    const hide = document.createElement('style');
-    hide.textContent = '.bottom-controls,#fmt-toolbar{display:none !important;}';
-    clone.querySelector('head').appendChild(hide);
-
-    const blob = new Blob(['<!doctype html>\n' + clone.outerHTML],
-                          { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'cherie-lee-intro-final.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
-
   // On load: assign keys then restore any saved content
   assignKeys();
   restoreContent();
-  restorePhoto();
 </script>
 
 
