@@ -672,11 +672,16 @@
     opacity: 0.7;
   }
 
-  /* Portrait overlaps the stripes' right edge by 20% of its own width,
-     and object-fit centres it vertically within the same band. */
+  /* Portrait overlaps the stripes by 20% — measured between what is actually
+     PAINTED, not the element boxes. Two corrections are baked into the 0.2478:
+       - the stripe <rect>s only reach 70% of the SVG viewBox, so the visible
+         stripe edge is at 0.7 x --stripe-w, not the full width;
+       - the photo carries a 6% transparent margin before the figure starts,
+         and the figure itself is 93.9% of the image width.
+     left = gutter + 0.7*stripe - (0.2*0.939 + 0.06)*photo  ->  0.2478*photo */
   .s-closing .portrait {
     position: absolute;
-    left: calc(var(--gutter) + var(--stripe-w) - 0.2 * var(--photo-w));
+    left: calc(var(--gutter) + 0.7 * var(--stripe-w) - 0.2478 * var(--photo-w));
     top: var(--band-top);
     height: var(--band);
     width: var(--photo-w);
