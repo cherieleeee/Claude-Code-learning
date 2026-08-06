@@ -654,25 +654,34 @@
      SLIDE 5 — CLOSING / CONTACT
   ═══════════════════════════════════════════════ */
   .s-closing { background: var(--paper); }
-  /* Stripes sit at the far left, sharing the portrait's vertical band */
+  /* Stripe band fills the left side, mirroring page 1's block.
+     --band is the shared vertical extent for the stripes and the portrait. */
+  .s-closing {
+    --band-top: clamp(60px, 6vh, 110px);
+    --band-bottom: clamp(160px, 17vh, 220px);
+    --band: calc(100% - var(--band-top) - var(--band-bottom));
+    --stripe-w: clamp(240px, 27vw, 520px);
+    --photo-w: clamp(200px, 23vw, 440px);
+    --gutter: clamp(36px, 3.6vw, 80px);
+  }
   .s-closing .pixel-glitch {
-    left: clamp(36px, 3.6vw, 80px);
-    top: clamp(80px, 10vh, 160px);
-    height: clamp(280px, 50vh, 620px);
-    width: clamp(90px, 10.5vw, 200px);
+    left: var(--gutter);
+    top: var(--band-top);
+    height: var(--band);
+    width: var(--stripe-w);
     opacity: 0.7;
   }
 
-  /* Portrait shares the same vertical band as the right-hand text block,
-     shifted right of the stripes to close the gap to "Let's connect." */
+  /* Portrait overlaps the stripes' right edge by 20% of its own width,
+     and object-fit centres it vertically within the same band. */
   .s-closing .portrait {
     position: absolute;
-    left: clamp(150px, 18.8vw, 360px);
-    top: clamp(80px, 10vh, 160px);
-    height: clamp(280px, 50vh, 620px);
-    width: auto;
+    left: calc(var(--gutter) + var(--stripe-w) - 0.2 * var(--photo-w));
+    top: var(--band-top);
+    height: var(--band);
+    width: var(--photo-w);
     object-fit: contain;
-    object-position: top left;
+    object-position: center;
     z-index: 4;
     pointer-events: none;
   }
